@@ -23,14 +23,16 @@ The project is about measuring reliability and explaining failures. A valid outc
 
 ## Team ownership
 
-| Role | Main technical responsibility | Shared deliverable responsibility |
-|---|---|---|
-| Telman3000 | Dataset, deterministic splits, corruption generator | Dataset section and failure examples |
-| LeoVesinML | Pretrained backbone, classification head, baseline, runtime measurements | Method section and reproducibility |
-| Mysteri0K1ng | Temperature scaling, rejection policy, metrics and sensitivity | Metric interpretation and controlled comparison |
-| MedvAx-AI | Evaluation runner, figures, failure analysis, live demo | Summary integration and presentation rehearsal |
+| Work-package owner | Main technical responsibility | Shared deliverable responsibility | Checklist |
+|---|---|---|---|
+| Telman3000 | Dataset, deterministic splits, corruption generator | Dataset section and failure examples | [Issue #1](https://github.com/MedvAx-AI/Reliable-Image-Classification-with-Confidence-Rejection/issues/1) |
+| LeoVesinML | Pretrained backbone, classification head, baseline, runtime measurements | Method section and reproducibility | [Issue #2](https://github.com/MedvAx-AI/Reliable-Image-Classification-with-Confidence-Rejection/issues/2) |
+| Mysteri0K1ng | Temperature scaling, rejection policy, metrics and sensitivity | Metric interpretation and controlled comparison | [Issue #3](https://github.com/MedvAx-AI/Reliable-Image-Classification-with-Confidence-Rejection/issues/3) |
+| MedvAx-AI | Evaluation runner, figures, failure analysis, live demo | Summary integration and presentation rehearsal | [Issue #4](https://github.com/MedvAx-AI/Reliable-Image-Classification-with-Confidence-Rejection/issues/4) |
 
 Each member implements technical work, reviews another member's work, contributes to the report, and prepares to explain the whole experiment.
+
+**Sprint:** 11–12 Sep: protocol/interfaces; 13–14 Sep: baseline/components and policy freeze; 15 Sep: final experiments; 16–17 Sep: reproduction, report and demo; 18 Sep: repair buffer. Each work package budgets 20–24 hours. Issue ownership is recorded in titles/bodies; platform assignees and collaborator access are separate kickoff tasks.
 
 ## Administrative dates and assumptions
 
