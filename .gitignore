@@ -1,0 +1,28 @@
+# Local environments and Python caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Raw data and generated caches
+data/raw/
+data/corrupted/
+data/cache/
+artifacts/features/
+checkpoints/
+*.pt
+*.pth
+*.ckpt
+
+# Local credentials and editor/OS state
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Keep final metrics, figures, split manifests, reports and small policy files tracked.
