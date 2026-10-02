@@ -12,6 +12,8 @@ Hypotheses to test: rejection may reduce error among accepted images at the cost
 
 Use [CIFAR-10](https://www.cs.toronto.edu/~kriz/cifar.html), which contains 60,000 RGB 32 × 32 images in ten classes, with official 50,000 training and 10,000 test partitions. Cite the original dataset report in the final summary.
 
+Class order: airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck.
+
 Use a fixed class-balanced subset for a small course experiment. Seed: **42**. Shuffle original indices within each class using a recorded NumPy RNG/version. Allocate disjoint consecutive blocks from the official training partition:
 
 | Use | Total | Per class | Permitted decisions |
@@ -32,7 +34,7 @@ Proposed stack: Python, PyTorch/torchvision, NumPy, Pillow, pandas, matplotlib, 
 
 Use [torchvision ResNet-18](https://docs.pytorch.org/vision/main/models/generated/torchvision.models.resnet18) with explicit `ResNet18_Weights.IMAGENET1K_V1`. Remove its original classifier, freeze the backbone parameters, and keep the backbone in evaluation mode so BatchNorm statistics are fixed. Cache its 512-dimensional features; train a new ten-class linear head. Do not treat ImageNet's original class outputs as CIFAR-10 labels.
 
-Use that weight enum's deterministic transforms and serialize the actual transform configuration in the run manifest. Apply all corruptions to the native RGB image before the model's resizing/normalization. No random augmentation in the core experiment.
+Use that weight enum's deterministic transforms: bilinear resize to 256, center crop to 224, scale to [0,1], then normalize by mean [0.485,0.456,0.406] and standard deviation [0.229,0.224,0.225]. Serialize the actual transform configuration in the run manifest. Apply all corruptions to the native RGB image before the model's resizing/normalization. No random augmentation in the core experiment.
 
 Proposed head training: cross-entropy, AdamW, learning rate 0.001, weight decay 0.0001, feature batch size 256, maximum 30 epochs, seed 42. Select the lowest model-validation NLL checkpoint, breaking ties by earliest epoch. Backbone extraction batch size starts at 64 and can be reduced for memory; log its final value. Tune only in development and freeze the final settings at M2.
 

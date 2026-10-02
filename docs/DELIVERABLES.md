@@ -1,6 +1,20 @@
 # Deliverables, demonstration, and completion gates
 
-All implementation paths below are planned outputs. No metrics, report PDF, slides or runnable classifier are claimed to exist in this initial planning commit.
+The first-submission proposal is prepared; the model, measured results, final summary and slides remain planned outputs. Keep the proposal and final results summary as separate deliverables.
+
+## First submission: implementation and evaluation proposal
+
+The supplied screenshot asks how the team will implement and evaluate the idea. Submit [first_submission.pdf](../reports/first_submission.pdf), with [editable source](../reports/first_submission.md). The proposal uses the five requested sections:
+
+1. **Project scope:** objective, closed-set task, all ten classes, fixed model and bounded experimental settings.
+2. **Dataset preparation:** official source, selected subset, exact preprocessing and disjoint train/development/test allocation.
+3. **Experimental plan:** A–D comparisons, head training, calibration, threshold rule, metrics, sensitivity and planned failure analysis.
+4. **Implementation plan:** pipeline steps, libraries, named pretrained weights, reproducibility and relative milestones.
+5. **Team responsibilities:** four explicit technical packages and each member's report/review contribution.
+
+This initial report describes intended work. The screenshot does not request measured results or set a page limit; we use a compact two-page PDF. The later two-page technical summary still requires actual results, figures and failure explanations under the general guidelines. Do not treat completion of this proposal as completion of the experiment or final submission.
+
+First-submission acceptance: all five sections present; settings agree with the protocol; four member identifiers correct; PDF readable with functioning links; wording reflects planned work; team confirms course names and submission deadline. First and final deadlines remain unprovided. Coursework is submitted by the team through its course channel.
 
 ## Reproducible repository
 
@@ -44,7 +58,7 @@ docs/CONTRIBUTIONS.md
 
 Measure training/feature extraction and inference time separately; cached feature/head evaluation is not full image inference. Save enough model, configuration and data provenance to trace each reported number to its run. Test all relative links and confirm instructor access to any external files.
 
-## Two-page technical summary
+## Final two-page technical summary
 
 **Exactly two rendered pages**, not a two-page-looking Markdown file. Use all eight sections in the course template; do not invent results to fill the layout.
 
@@ -101,7 +115,8 @@ During practice, rotate questions; no person relies on another teammate to answe
 
 ## Final submission checklist
 
-- [ ] Topic is unique, registered with four names by 16 September 2026; final deadline and demo timing confirmed.
+- [ ] Assigned topic and four recorded names are confirmed following the historical 16 September registration deadline; final deadline and demo timing confirmed.
+- [ ] First-submission proposal covers the five screenshot sections and is submitted by the team by the confirmed initial deadline.
 - [ ] Source code or executable notebook exists; no missing files or inaccessible artifacts.
 - [ ] README has exact tested commands for setup, data, training/checkpoint loading, evaluation, plots and demo.
 - [ ] `requirements.txt` / environment description and real hardware/software/runtime record are present.

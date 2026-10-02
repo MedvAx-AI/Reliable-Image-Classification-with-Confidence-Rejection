@@ -1,10 +1,10 @@
 # Work plan for four people
 
-This is an implementation plan, not a record of completed experiments. Course obligations are distinguished from proposed design choices in [REQUIREMENTS.md](REQUIREMENTS.md). Technical definitions are fixed in [EXPERIMENT_PROTOCOL.md](EXPERIMENT_PROTOCOL.md).
+Revised on **2 October 2026** after reviewing the supplied guidelines and first-submission screenshot. This is an implementation plan, not a record of completed experiments. Course obligations are distinguished from proposed design choices in [REQUIREMENTS.md](REQUIREMENTS.md). Technical definitions are fixed in [EXPERIMENT_PROTOCOL.md](EXPERIMENT_PROTOCOL.md).
 
 ## Assignment and workload
 
-Budget **20–24 hours per member**, approximately 80–96 team hours in a **seven-day sprint (11–17 September 2026)**. This requires roughly 3–4 focused hours per person per day, with 18 September reserved for fixes. These are planning estimates, excluding unattended computation. Keep the scope to one dataset, one backbone, one calibration method, and three corruption families. No second architecture is required because the course explicitly permits a second condition instead.
+Budget **20–24 hours per member**, approximately 80–96 team hours in a **relative seven-day implementation sprint after the first submission**. This requires roughly 3–4 focused hours per person per day, followed by a one-day repair buffer. The September dates were internal targets and have been superseded. These are planning estimates, excluding unattended computation. Keep the scope to one dataset, one backbone, one calibration method, and three corruption families. No second architecture is required because the course explicitly permits a second condition instead.
 
 The user supplied these four handles and requested completion as soon as possible. Assignments below are ready to start; confirm daily availability and repository access at kickoff. People may swap complete packages if their skills fit better. No member is assigned only writing or slides. Full course names still need to be entered by the team.
 
@@ -12,7 +12,7 @@ The user supplied these four handles and requested completion as soon as possibl
 
 **Tasks and estimated effort**
 
-1. Confirm topic availability, record four names by **16.09.2026**, obtain submission date, and log instructor clarification of demo timing (1 hour).
+1. Confirm the team/topic assignment and four names following the historical **16.09.2026** registration deadline; obtain first/final submission dates and clarify demo timing (1 hour).
 2. Implement official CIFAR-10 retrieval, record source/checksum/class order, and build fixed stratified manifests with stable original sample IDs (4 hours).
 3. Verify disjoint training, model-validation, calibration, threshold-selection, and test partitions; persist split seed and hashes (2 hours).
 4. Implement deterministic Gaussian blur, Gaussian noise, and JPEG variants at three severity levels, plus clean control (5 hours).
@@ -69,7 +69,7 @@ The user supplied these four handles and requested completion as soon as possibl
 2. Integrate the 4 × 10 experiment matrix, retain per-image decisions, and produce compact tables, reliability diagrams, and risk–coverage plots (4 hours).
 3. Lead analysis of at least three representative failures; compare clean/corrupt views, quantify confidence and decisions, and distinguish evidence from hypotheses (4 hours).
 4. Build a small local live demo showing image, prediction, confidence, threshold, and accept/reject state, including a saved failure example (3 hours).
-5. Assemble the two-page summary from sections written by all four people; integrate up to three slides (2 hours).
+5. Integrate the first-submission proposal from team-owned sections; later assemble the final two-page results summary and up to three slides (2 hours).
 6. Review LeoVesinML's clean-environment reproduction, audit final artifacts against the requirement matrix, and coordinate timed rehearsals and individual Q&A (3–5 hours).
 
 **Planned outputs:** `src/evaluate.py`, `src/plots.py`, `demo.py` or demo notebook, `results/final_metrics.csv`, `results/per_image.csv`, `results/figures/*`, `reports/failure_analysis.md`, `reports/technical_summary.pdf`, demo slides/script.
@@ -80,16 +80,17 @@ The user supplied these four handles and requested completion as soon as possibl
 
 ## Milestones and handoffs
 
-Start immediately on **11 September 2026**. Dates below are internal sprint targets, not instructor deadlines. Target completion is **17 September**, with **18 September** as a repair buffer. If the final deadline D is earlier, move the freeze and rehearsal ahead of D; do not assume this internal schedule overrides it. Confirm feasibility against member availability at kickoff. Reduce optional polish and bootstrap analysis first; preserve all mandatory evidence. The 16 September registration date remains fixed regardless of sprint changes.
+The first-submission proposal is prepared on **2 October 2026**; it documents intended work and contains no measured results. Start the relative implementation sprint after that submission, subject to confirmed course deadlines and member availability. Days below are internal targets; the first and final submission deadlines are not stated in the supplied materials. If either deadline requires an earlier gate, adjust the schedule and preserve an independent reproduction check. Reduce optional polish and bootstrap analysis first; preserve mandatory evidence. The historical 16 September topic-registration deadline is recorded separately and is not a new project deadline.
 
 | Gate | Target | Telman3000 | LeoVesinML | Mysteri0K1ng | MedvAx-AI | Exit evidence |
 |---|---|---|---|---|---|---|
-| M0: registration | Day 1, 11 Sep; hard latest 16 Sep | Lead topic/names/date check | Confirm role/hardware | Read protocol | Record availability | Unique topic registered; role names and known dates recorded |
-| M1: protocol + interfaces | Days 1–2, 11–12 Sep | Frozen manifests; download path | Environment + feature/model pilot | Metric fixtures + policy specification | Runner skeleton + report/demo outline | Everyone agrees split IDs, settings, schemas; baseline pilot runs on development data |
-| M2: baseline + components | Days 3–4, 13–14 Sep | Corruptions ready and checked | Saved development baseline + fixed checkpoint | Temperature and operating thresholds fitted | Components integrated on development samples | Baseline saved; protocol/config/checkpoint/T/threshold hashes frozen before test |
-| M3: final experiments | Day 5, 15 Sep | Audit alignment; investigate failures | Run inference and runtime profile | Validate metrics and sensitivity | Execute matrix; figures + 3 failures | Final metrics/figures saved; conclusions supported, including negative outcomes |
-| M4: submission-ready | Days 6–7, 16–17 Sep | Verify data instructions | Fresh-environment run + README | Audit numerical claims | Final report/demo packaging | Checklist complete; exactly 2-page PDF; ≤3 slides; ≤5-minute demo; all four pass practice Q&A |
-| Buffer | 18 Sep, unless course deadline requires earlier | All four fix verified problems and submit | | | | Instructor can access repository and all submitted artifacts |
+| S0: first submission | Prepared 2 Oct; submission date to confirm | Review data section; verify assignment | Review model/implementation section | Review experiment/metrics section | Integrate proposal PDF and check five required sections | First-submission proposal ready; team submits through course channel |
+| M0: assignment check | Before implementation sprint | Confirm assignment/names/deadlines | Confirm role/hardware | Read protocol | Record availability | Assigned topic and actual course dates verified |
+| M1: protocol + interfaces | Implementation Days 1–2 | Frozen manifests; download path | Environment + feature/model pilot | Metric fixtures + policy specification | Runner skeleton + report/demo outline | Everyone agrees split IDs, settings, schemas; baseline pilot runs on development data |
+| M2: baseline + components | Implementation Days 3–4 | Corruptions ready and checked | Saved development baseline + fixed checkpoint | Temperature and operating thresholds fitted | Components integrated on development samples | Baseline saved; protocol/config/checkpoint/T/threshold hashes frozen before test |
+| M3: final experiments | Implementation Day 5 | Audit alignment; investigate failures | Run inference and runtime profile | Validate metrics and sensitivity | Execute matrix; figures + 3 failures | Final metrics/figures saved; conclusions supported, including negative outcomes |
+| M4: submission-ready | Implementation Days 6–7 | Verify data instructions | Fresh-environment run + README | Audit numerical claims | Final report/demo packaging | Checklist complete; exactly 2-page PDF; ≤3 slides; ≤5-minute demo; all four pass practice Q&A |
+| Buffer | Implementation Day 8, before course deadline | All four fix verified problems and submit | | | | Instructor can access repository and all submitted artifacts |
 
 Critical path: split manifests → classifier/checkpoint → calibration and policy → locked test evaluation → figures/failures → verified report and demo. Mysteri0K1ng and MedvAx-AI use development fixtures while the baseline is prepared so they do not wait for training.
 
@@ -105,7 +106,7 @@ Critical path: split manifests → classifier/checkpoint → calibration and pol
 
 | Risk | Response | Owner |
 |---|---|---|
-| Topic already taken | Check sheet immediately and ask instructor to resolve assignment; do not assume repo creation reserves it | Telman3000 |
+| Topic assignment uncertain | Verify the recorded instructor/team assignment after the historical registration deadline; repository creation alone does not reserve a topic | Telman3000 |
 | Final deadline unknown | Obtain date at kickoff; move sprint gates earlier if needed and preserve a pre-submission check | Telman3000 |
 | Slow compute | Cache frozen features, use the fixed subset, measure a development pilot before committing; avoid architecture searches | LeoVesinML |
 | Calibration does not help | Report it honestly; test whether clean calibration transfers under corruption and explain limits | Mysteri0K1ng |

@@ -1,6 +1,6 @@
 # Course requirements and evidence matrix
 
-Source: user-supplied **Computer_Vision_Project_Guidelines.pdf**, pages 1–3, inspected in full. Topic-specific requirements come from the supplied screenshot. This document paraphrases the requirements and maps each to planned evidence. It is not a claim that future deliverables already exist.
+Source: user-supplied **Computer_Vision_Project_Guidelines.pdf**, pages 1–3, inspected in full. Topic-specific requirements come from the original topic screenshot; first-submission requirements come from the screenshot supplied on 2 October 2026. The newly supplied PDF was reviewed in full on that date. This document paraphrases the requirements and maps each to planned evidence. It is not a claim that future deliverables already exist.
 
 The PDF supplies course constraints. The user's request authorizes creating the repository and a four-person plan. The PDF does not independently instruct this assistant to submit coursework, edit the course sheet, or contact other people.
 
@@ -33,7 +33,21 @@ The PDF supplies course constraints. The user's request authorizes creating the 
 | T03 | Evaluate rejection thresholds (topic screenshot) | Validation-selected operating points, feasibility record, fixed-grid sensitivity and risk–coverage plot | Mysteri0K1ng |
 | T04 | Evaluate blurred, noisy, compressed images (topic screenshot) | All three corruption families at three levels plus clean control, paired by original ID | Telman3000 + MedvAx-AI |
 
-## All eight summary-template sections
+## First-submission proposal requirements (2 October screenshot)
+
+The screenshot adds an initial implementation/evaluation report; it does not replace final experiment evidence. These five rows are fulfilled by the proposal content, while the final-course evidence above remains future work.
+
+| ID | Required section | Evidence in first_submission.md / PDF | Section owner |
+|---|---|---|---|
+| F01 | Project scope | Objective, exact task, all ten classes, fixed ResNet-18 and A–D scope | Mysteri0K1ng + LeoVesinML |
+| F02 | Dataset preparation | CIFAR-10 source, 17,000-image subset, preprocessing and all five split counts/uses | Telman3000 |
+| F03 | Experimental plan | Comparison table, training/calibration/threshold settings, metrics, sensitivity and failures | Mysteri0K1ng + LeoVesinML |
+| F04 | Implementation plan | Six pipeline stages, libraries, named pretrained weights, artifacts and relative sprint | LeoVesinML + MedvAx-AI |
+| F05 | Team responsibilities | Four named technical work packages, report contributions and review responsibilities | All; MedvAx-AI integrates |
+
+Prepared report: [PDF](../reports/first_submission.pdf), [editable source](../reports/first_submission.md). The screenshot specifies neither a report page limit nor a due date. This proposal is two pages for convenience; the PDF's mandatory two-page summary applies to the later results report.
+
+## All eight final-summary template sections
 
 | Course template section | Required content in final two-page summary | Writer |
 |---|---|---|
@@ -66,7 +80,7 @@ Individual Q&A contributes 5 points for each student. Failure analysis and demo 
 ## Assumptions and open items
 
 - Dataset, backbone, subset sizes, numeric settings, threshold target, work estimates and sprint dates are proposed team decisions, not imposed by the PDF.
-- The final submission deadline is absent. Obtain it; do not confuse 16 September's topic-registration deadline with project submission.
+- First and final submission deadlines are absent. Obtain them; 16 September was the historical topic-registration deadline, not a project submission date. The expired September internal sprint has been replaced by relative implementation milestones.
 - The PDF gives a five-minute demo requirement and a ten-minute session heading. Plan five minutes of content plus five minutes of questions pending instructor confirmation.
 - Sheet access, topic uniqueness and registration remain unverified. No edit or submission to the sheet has been performed.
 - User supplied four GitHub handles. Course/legal names, collaborator access and availability still need the team's confirmation at kickoff.

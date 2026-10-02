@@ -1,12 +1,14 @@
 # Reliable Image Classification with Confidence Rejection
 
-Introduction to Computer Vision · Team of four · Planning baseline: 11 September 2026
+Introduction to Computer Vision · Team of four · Plan revised: 2 October 2026
 
 Build an image classifier that can reject low-confidence predictions instead of always returning a class. Evaluate classification accuracy, confidence calibration, rejection thresholds, and performance under blur, noise, and JPEG compression.
 
-**Status:** repository and work plan prepared. Model implementation, experiments, measured results, final two-page summary, and demo are future team deliverables. This repository does not yet contain a runnable classifier or claim experimental results.
+**Status:** repository, updated work plan and first-submission proposal prepared. Model implementation, experiments, measured results, final two-page summary, and demo are future team deliverables. This repository does not yet contain a runnable classifier or claim experimental results.
 
 ## Start here
+
+- [First-submission report (PDF)](reports/first_submission.pdf) and [editable Markdown](reports/first_submission.md): scope, data preparation, experiment, implementation and responsibilities.
 
 - [Four-person work plan](docs/TEAM_PLAN.md): individual tasks, dependencies, estimates, milestones, and acceptance criteria.
 - [Experimental protocol](docs/EXPERIMENT_PROTOCOL.md): dataset, baseline, comparisons, calibration, thresholds, metrics, and corruption settings.
@@ -32,12 +34,12 @@ The project is about measuring reliability and explaining failures. A valid outc
 
 Each member implements technical work, reviews another member's work, contributes to the report, and prepares to explain the whole experiment.
 
-**Sprint:** 11–12 Sep: protocol/interfaces; 13–14 Sep: baseline/components and policy freeze; 15 Sep: final experiments; 16–17 Sep: reproduction, report and demo; 18 Sep: repair buffer. Each work package budgets 20–24 hours. Issue ownership is recorded in titles/bodies; platform assignees and collaborator access are separate kickoff tasks.
+**Sprint:** after the first submission, Days 1–2: protocol/interfaces; Days 3–4: baseline/components and policy freeze; Day 5: final experiments; Days 6–7: reproduction, final report and demo; Day 8: repair buffer. This replaces the expired September internal targets. Each work package budgets 20–24 hours. Issue ownership is recorded in titles/bodies; platform assignees and collaborator access are separate kickoff tasks.
 
 ## Administrative dates and assumptions
 
-- **By 16 September 2026:** verify that this topic is available and enter all four names next to it in the [course selection sheet](https://docs.google.com/spreadsheets/d/1G8_iV4xF9VyqWe4vlHy7VSjP9mxTog_O8kPNJ81sl-I/edit?usp=sharing). A topic may belong to only one team. Repository creation does not reserve the topic. Sheet availability/registration has not been verified.
-- **Final submission date:** not stated in the supplied guidelines; Telman3000 obtains it from the teaching team. The user requested completion as soon as possible. The plan targets a seven-day sprint, 11–17 September, with 18 September reserved for fixes; these are internal targets, not course deadlines.
+- **Historical registration deadline: 16 September 2026.** Telman3000 should confirm the team/topic assignment and the four recorded names in the [course selection sheet](https://docs.google.com/spreadsheets/d/1G8_iV4xF9VyqWe4vlHy7VSjP9mxTog_O8kPNJ81sl-I/edit?usp=sharing). A topic may belong to only one team. Repository creation does not reserve the topic. Sheet availability/registration has not been verified.
+- **Final submission date:** not stated in the supplied guidelines; Telman3000 obtains it from the teaching team. The user requested completion as soon as possible. The plan uses a relative seven-day implementation sprint plus a one-day repair buffer after the first submission; these are internal targets, not course deadlines. The first-submission deadline is also absent from the supplied materials.
 - **Presentation:** prepare a five-minute demo with at most three slides. The PDF also says “Demo Format (10 min)”; provisionally reserve the remaining five minutes for Q&A and confirm with the instructor.
 - **People:** Telman3000, LeoVesinML, Mysteri0K1ng and MedvAx-AI are the user-supplied team handles. Work-package ownership is recorded below; course names and repository access are kickoff tasks.
 - **Visibility:** public, as requested by the user; verify instructor access to linked artifacts before submission.
@@ -62,4 +64,4 @@ Course obligations are taken from the user-supplied **Computer_Vision_Project_Gu
 - [Torchvision ResNet-18 documentation](https://docs.pytorch.org/vision/main/models/generated/torchvision.models.resnet18): pretrained weights and preprocessing.
 - [Guo et al., On Calibration of Modern Neural Networks, ICML 2017](https://proceedings.mlr.press/v70/guo17a.html): temperature scaling and calibration background.
 
-Source pages checked on 11 September 2026. The original course PDF and screenshot are not redistributed here; their requirements are mapped in the planning documents.
+Source pages rechecked on 2 October 2026. The PDF supplied on 2 October was reviewed in full; the latest screenshot additionally specifies the first-submission proposal sections. See [guideline review](docs/GUIDELINES_REVIEW.md). The original course PDF and screenshot are not redistributed here; their requirements are mapped in the planning documents.
