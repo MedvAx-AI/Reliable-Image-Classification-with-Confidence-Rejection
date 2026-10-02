@@ -36,14 +36,6 @@ Each member implements technical work, reviews another member's work, contribute
 
 **Sprint:** after the first submission, Days 1–2: protocol/interfaces; Days 3–4: baseline/components and policy freeze; Day 5: final experiments; Days 6–7: reproduction, final report and demo; Day 8: repair buffer. This replaces the expired September internal targets. Each work package budgets 20–24 hours. Issue ownership is recorded in titles/bodies; platform assignees and collaborator access are separate kickoff tasks.
 
-## Administrative dates and assumptions
-
-- **Historical registration deadline: 16 September 2026.** Telman3000 should confirm the team/topic assignment and the four recorded names in the [course selection sheet](https://docs.google.com/spreadsheets/d/1G8_iV4xF9VyqWe4vlHy7VSjP9mxTog_O8kPNJ81sl-I/edit?usp=sharing). A topic may belong to only one team. Repository creation does not reserve the topic. Sheet availability/registration has not been verified.
-- **Final submission date:** not stated in the supplied guidelines; Telman3000 obtains it from the teaching team. The user requested completion as soon as possible. The plan uses a relative seven-day implementation sprint plus a one-day repair buffer after the first submission; these are internal targets, not course deadlines. The first-submission deadline is also absent from the supplied materials.
-- **Presentation:** prepare a five-minute demo with at most three slides. The PDF also says “Demo Format (10 min)”; provisionally reserve the remaining five minutes for Q&A and confirm with the instructor.
-- **People:** Telman3000, LeoVesinML, Mysteri0K1ng and MedvAx-AI are the user-supplied team handles. Work-package ownership is recorded below; course names and repository access are kickoff tasks.
-- **Visibility:** public, as requested by the user; verify instructor access to linked artifacts before submission.
-
 ## How the experiment will work
 
 Use a frozen ImageNet-pretrained ResNet-18 backbone and train a ten-class linear head. Cache features to keep training small. Compare four conditions with the same model checkpoint: raw confidence without rejection, raw confidence with rejection, temperature-scaled confidence without rejection, and temperature-scaled confidence with rejection. Evaluate all four on identical held-out images and corruption variants.
