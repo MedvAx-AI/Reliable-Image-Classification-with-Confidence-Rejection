@@ -27,10 +27,10 @@ The project is about measuring reliability and explaining failures. A valid outc
 
 | Work-package owner | Main technical responsibility | Shared deliverable responsibility | Checklist |
 |---|---|---|---|
-| Telman3000 | Dataset, deterministic splits, corruption generator | Dataset section and failure examples | [Issue #1](https://github.com/MedvAx-AI/Reliable-Image-Classification-with-Confidence-Rejection/issues/1) |
-| LeoVesinML | Pretrained backbone, classification head, baseline, runtime measurements | Method section and reproducibility | [Issue #2](https://github.com/MedvAx-AI/Reliable-Image-Classification-with-Confidence-Rejection/issues/2) |
-| Mysteri0K1ng | Temperature scaling, rejection policy, metrics and sensitivity | Metric interpretation and controlled comparison | [Issue #3](https://github.com/MedvAx-AI/Reliable-Image-Classification-with-Confidence-Rejection/issues/3) |
-| MedvAx-AI | Evaluation runner, figures, failure analysis, live demo | Summary integration and presentation rehearsal | [Issue #4](https://github.com/MedvAx-AI/Reliable-Image-Classification-with-Confidence-Rejection/issues/4) |
+| [Telman3000](https://github.com/Telman3000) | Dataset, deterministic splits, corruption generator | Dataset section and failure examples | [Issue #1](https://github.com/MedvAx-AI/Reliable-Image-Classification-with-Confidence-Rejection/issues/1) |
+| [LeoVesinML](https://github.com/LeoVesinML) | Pretrained backbone, classification head, baseline, runtime measurements | Method section and reproducibility | [Issue #2](https://github.com/MedvAx-AI/Reliable-Image-Classification-with-Confidence-Rejection/issues/2) |
+| [Mysteri0K1ng](https://github.com/Mysteri0K1ng) | Temperature scaling, rejection policy, metrics and sensitivity | Metric interpretation and controlled comparison | [Issue #3](https://github.com/MedvAx-AI/Reliable-Image-Classification-with-Confidence-Rejection/issues/3) |
+| [MedvAx-AI](https://github.com/MedvAx-AI) | Evaluation runner, figures, failure analysis, live demo | Summary integration and presentation rehearsal | [Issue #4](https://github.com/MedvAx-AI/Reliable-Image-Classification-with-Confidence-Rejection/issues/4) |
 
 Each member implements technical work, reviews another member's work, contributes to the report, and prepares to explain the whole experiment.
 
