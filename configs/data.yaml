@@ -1,0 +1,58 @@
+# Telman3000 data contract — frozen planned defaults from EXPERIMENT_PROTOCOL.md
+dataset:
+  name: CIFAR-10
+  source_url: https://www.cs.toronto.edu/~kriz/cifar.html
+  official_archive_md5: c58f30108f718f92721af3b95e74349a
+  root: data/raw
+  num_classes: 10
+  class_order:
+    - airplane
+    - automobile
+    - bird
+    - cat
+    - deer
+    - dog
+    - frog
+    - horse
+    - ship
+    - truck
+
+split:
+  seed: 42
+  per_class:
+    training: 1000
+    model_validation: 200
+    calibration: 150
+    policy_selection: 150
+    final_test: 200
+  # Allocation order within each class after within-class shuffle of official train IDs
+  train_block_order:
+    - training
+    - model_validation
+    - calibration
+    - policy_selection
+
+preprocessing:
+  # Applied AFTER corruptions (owned jointly; values match ResNet18_Weights.IMAGENET1K_V1)
+  resize: 256
+  center_crop: 224
+  normalize_mean: [0.485, 0.456, 0.406]
+  normalize_std: [0.229, 0.224, 0.225]
+
+corruptions:
+  apply_at: native_32x32_before_model_transforms
+  families:
+    gaussian_blur:
+      radii_px: [0.5, 1.0, 1.5]
+    gaussian_noise:
+      std_in_01: [0.03, 0.06, 0.12]
+    jpeg:
+      qualities: [70, 40, 15]
+      subsampling: 0
+      optimize: false
+      progressive: false
+  include_clean: true
+
+paths:
+  manifests_dir: artifacts/splits
+  sample_panel_dir: artifacts/corruption_samples

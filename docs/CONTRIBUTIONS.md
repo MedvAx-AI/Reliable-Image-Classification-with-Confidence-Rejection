@@ -15,7 +15,8 @@ Record actual work below as it occurs. Do not copy planned assignments into the 
 
 | Date | Member | Implemented/analyzed/reviewed work | Commit / PR / result artifact | Interpretation or learning |
 |---|---|---|---|---|
-| Pending | All | Implementation has not started in this planning repository | — | — |
+| 2026-10-04 | Telman3000 | Implemented CIFAR-10 download, seed-42 five-way stratified manifests, leakage checks, deterministic blur/noise/JPEG, prepare CLI, tests, data README, corruption sample panel | branch `telman/data-pipeline`; `src/data.py`, `src/corruptions.py`, `scripts/prepare_data.py`, `artifacts/splits/*`, `artifacts/corruption_samples/*` | Planned subset sizes are now executable and reproducible; teammates can load `Cifar10SplitDataset` without re-deriving splits |
+| Pending | LeoVesinML / Mysteri0K1ng / MedvAx-AI | Remaining work packages | — | — |
 
 Each person should have evidence of technical implementation, experimental reasoning, review/reproduction, writing and understanding. The final two-page summary needs a compact contribution statement for all four people; the repository log can retain detailed evidence.
 
