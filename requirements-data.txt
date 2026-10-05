@@ -1,0 +1,8 @@
+# Minimal deps to reproduce Telman3000 data / corruption pipeline (Issue #1).
+# Full project pins are owned by LeoVesinML.
+torch>=2.0
+torchvision>=0.15
+numpy>=1.24
+Pillow>=9.0
+PyYAML>=6.0
+pytest>=7.0

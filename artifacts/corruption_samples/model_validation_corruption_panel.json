@@ -1,0 +1,305 @@
+{
+  "split": "model_validation",
+  "cells": [
+    {
+      "row": 0,
+      "source_id": "train:317",
+      "label": 0,
+      "class_name": "airplane",
+      "corruption": "clean",
+      "severity": "none",
+      "param_name": null,
+      "param_value": null
+    },
+    {
+      "row": 0,
+      "source_id": "train:317",
+      "label": 0,
+      "class_name": "airplane",
+      "corruption": "gaussian_blur",
+      "severity": "mild",
+      "param_name": "radius_px",
+      "param_value": 0.5
+    },
+    {
+      "row": 0,
+      "source_id": "train:317",
+      "label": 0,
+      "class_name": "airplane",
+      "corruption": "gaussian_blur",
+      "severity": "medium",
+      "param_name": "radius_px",
+      "param_value": 1.0
+    },
+    {
+      "row": 0,
+      "source_id": "train:317",
+      "label": 0,
+      "class_name": "airplane",
+      "corruption": "gaussian_blur",
+      "severity": "severe",
+      "param_name": "radius_px",
+      "param_value": 1.5
+    },
+    {
+      "row": 0,
+      "source_id": "train:317",
+      "label": 0,
+      "class_name": "airplane",
+      "corruption": "gaussian_noise",
+      "severity": "mild",
+      "param_name": "std_in_01",
+      "param_value": 0.03
+    },
+    {
+      "row": 0,
+      "source_id": "train:317",
+      "label": 0,
+      "class_name": "airplane",
+      "corruption": "gaussian_noise",
+      "severity": "medium",
+      "param_name": "std_in_01",
+      "param_value": 0.06
+    },
+    {
+      "row": 0,
+      "source_id": "train:317",
+      "label": 0,
+      "class_name": "airplane",
+      "corruption": "gaussian_noise",
+      "severity": "severe",
+      "param_name": "std_in_01",
+      "param_value": 0.12
+    },
+    {
+      "row": 0,
+      "source_id": "train:317",
+      "label": 0,
+      "class_name": "airplane",
+      "corruption": "jpeg",
+      "severity": "mild",
+      "param_name": "quality",
+      "param_value": 70
+    },
+    {
+      "row": 0,
+      "source_id": "train:317",
+      "label": 0,
+      "class_name": "airplane",
+      "corruption": "jpeg",
+      "severity": "medium",
+      "param_name": "quality",
+      "param_value": 40
+    },
+    {
+      "row": 0,
+      "source_id": "train:317",
+      "label": 0,
+      "class_name": "airplane",
+      "corruption": "jpeg",
+      "severity": "severe",
+      "param_name": "quality",
+      "param_value": 15
+    },
+    {
+      "row": 1,
+      "source_id": "train:455",
+      "label": 0,
+      "class_name": "airplane",
+      "corruption": "clean",
+      "severity": "none",
+      "param_name": null,
+      "param_value": null
+    },
+    {
+      "row": 1,
+      "source_id": "train:455",
+      "label": 0,
+      "class_name": "airplane",
+      "corruption": "gaussian_blur",
+      "severity": "mild",
+      "param_name": "radius_px",
+      "param_value": 0.5
+    },
+    {
+      "row": 1,
+      "source_id": "train:455",
+      "label": 0,
+      "class_name": "airplane",
+      "corruption": "gaussian_blur",
+      "severity": "medium",
+      "param_name": "radius_px",
+      "param_value": 1.0
+    },
+    {
+      "row": 1,
+      "source_id": "train:455",
+      "label": 0,
+      "class_name": "airplane",
+      "corruption": "gaussian_blur",
+      "severity": "severe",
+      "param_name": "radius_px",
+      "param_value": 1.5
+    },
+    {
+      "row": 1,
+      "source_id": "train:455",
+      "label": 0,
+      "class_name": "airplane",
+      "corruption": "gaussian_noise",
+      "severity": "mild",
+      "param_name": "std_in_01",
+      "param_value": 0.03
+    },
+    {
+      "row": 1,
+      "source_id": "train:455",
+      "label": 0,
+      "class_name": "airplane",
+      "corruption": "gaussian_noise",
+      "severity": "medium",
+      "param_name": "std_in_01",
+      "param_value": 0.06
+    },
+    {
+      "row": 1,
+      "source_id": "train:455",
+      "label": 0,
+      "class_name": "airplane",
+      "corruption": "gaussian_noise",
+      "severity": "severe",
+      "param_name": "std_in_01",
+      "param_value": 0.12
+    },
+    {
+      "row": 1,
+      "source_id": "train:455",
+      "label": 0,
+      "class_name": "airplane",
+      "corruption": "jpeg",
+      "severity": "mild",
+      "param_name": "quality",
+      "param_value": 70
+    },
+    {
+      "row": 1,
+      "source_id": "train:455",
+      "label": 0,
+      "class_name": "airplane",
+      "corruption": "jpeg",
+      "severity": "medium",
+      "param_name": "quality",
+      "param_value": 40
+    },
+    {
+      "row": 1,
+      "source_id": "train:455",
+      "label": 0,
+      "class_name": "airplane",
+      "corruption": "jpeg",
+      "severity": "severe",
+      "param_name": "quality",
+      "param_value": 15
+    },
+    {
+      "row": 2,
+      "source_id": "train:497",
+      "label": 0,
+      "class_name": "airplane",
+      "corruption": "clean",
+      "severity": "none",
+      "param_name": null,
+      "param_value": null
+    },
+    {
+      "row": 2,
+      "source_id": "train:497",
+      "label": 0,
+      "class_name": "airplane",
+      "corruption": "gaussian_blur",
+      "severity": "mild",
+      "param_name": "radius_px",
+      "param_value": 0.5
+    },
+    {
+      "row": 2,
+      "source_id": "train:497",
+      "label": 0,
+      "class_name": "airplane",
+      "corruption": "gaussian_blur",
+      "severity": "medium",
+      "param_name": "radius_px",
+      "param_value": 1.0
+    },
+    {
+      "row": 2,
+      "source_id": "train:497",
+      "label": 0,
+      "class_name": "airplane",
+      "corruption": "gaussian_blur",
+      "severity": "severe",
+      "param_name": "radius_px",
+      "param_value": 1.5
+    },
+    {
+      "row": 2,
+      "source_id": "train:497",
+      "label": 0,
+      "class_name": "airplane",
+      "corruption": "gaussian_noise",
+      "severity": "mild",
+      "param_name": "std_in_01",
+      "param_value": 0.03
+    },
+    {
+      "row": 2,
+      "source_id": "train:497",
+      "label": 0,
+      "class_name": "airplane",
+      "corruption": "gaussian_noise",
+      "severity": "medium",
+      "param_name": "std_in_01",
+      "param_value": 0.06
+    },
+    {
+      "row": 2,
+      "source_id": "train:497",
+      "label": 0,
+      "class_name": "airplane",
+      "corruption": "gaussian_noise",
+      "severity": "severe",
+      "param_name": "std_in_01",
+      "param_value": 0.12
+    },
+    {
+      "row": 2,
+      "source_id": "train:497",
+      "label": 0,
+      "class_name": "airplane",
+      "corruption": "jpeg",
+      "severity": "mild",
+      "param_name": "quality",
+      "param_value": 70
+    },
+    {
+      "row": 2,
+      "source_id": "train:497",
+      "label": 0,
+      "class_name": "airplane",
+      "corruption": "jpeg",
+      "severity": "medium",
+      "param_name": "quality",
+      "param_value": 40
+    },
+    {
+      "row": 2,
+      "source_id": "train:497",
+      "label": 0,
+      "class_name": "airplane",
+      "corruption": "jpeg",
+      "severity": "severe",
+      "param_name": "quality",
+      "param_value": 15
+    }
+  ]
+}

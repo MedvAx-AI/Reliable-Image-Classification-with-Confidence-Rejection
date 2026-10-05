@@ -1,0 +1,21 @@
+{
+  "manifest_sha256": "0a731713a64cd147594f806f19eff3e0ceaf7c9db1e1c0f8c116cf25787df2be",
+  "archive_sha256": "6d958be074577803d12ecdefd02955f39262c83c16fe9348329d7fe0b5c001ce",
+  "seed": 42,
+  "numpy_version": "2.4.4",
+  "counts": {
+    "training": 10000,
+    "model_validation": 2000,
+    "calibration": 1500,
+    "policy_selection": 1500,
+    "final_test": 2000
+  },
+  "split_file_hashes": {
+    "training": "c6bd52c2f49f98021d5392a909382d15529476b1e932072ac99fbe3fda2cd6cf",
+    "model_validation": "82568caf0b19fab5d594f8d5562a715ef2d1dd3f1c032b343b46ce65725240a0",
+    "calibration": "9a59adb0e22c31855e012389d6a29a5ba8efdc30ab8ace1e5ce121ec9ac7ad9a",
+    "policy_selection": "f8415c5e7fff0e5d575113635447cfb7ea9514d1fec5617440b8808d4577039a",
+    "final_test": "9716d1ba47cfbdc513c39394ed573f1440d7ab8de264a0431fe78073547eab51"
+  },
+  "created_utc": "2026-10-05T07:13:27.762209+00:00"
+}
