@@ -16,7 +16,8 @@ Record actual work below as it occurs. Do not copy planned assignments into the 
 | Date | Member | Implemented/analyzed/reviewed work | Commit / PR / result artifact | Interpretation or learning |
 |---|---|---|---|---|
 | 2026-10-04 | Telman3000 | Implemented CIFAR-10 download, seed-42 five-way stratified manifests, leakage checks, deterministic blur/noise/JPEG, prepare CLI, tests, data README, corruption sample panel | branch `telman/data-pipeline`; `src/data.py`, `src/corruptions.py`, `scripts/prepare_data.py`, `artifacts/splits/*`, `artifacts/corruption_samples/*` | Planned subset sizes are now executable and reproducible; teammates can load `Cifar10SplitDataset` without re-deriving splits |
-| Pending | LeoVesinML / Mysteri0K1ng / MedvAx-AI | Remaining work packages | — | — |
+| 2026-10-11 | LeoVesinML | Frozen ImageNet ResNet-18, ten-class head trained on the training split only, epoch chosen by model-validation NLL, development condition-A baseline, calibration and policy logits, runtime record, reload check. Corrected stale split-file hashes without changing IDs. Coding assistant used for the implementation. | branch `leo/frozen-resnet-baseline`; `src/model.py`, `src/train.py`, `src/predict.py`, `scripts/train_baseline.py`, `artifacts/model/linear_head.npz`, `artifacts/baseline/development_baseline.json` | Protocol defaults were not searched. Final test was not run. Epoch 30 had the lowest validation NLL, so the 30-epoch cap was kept. Same-device reload matched logits within 1.1e-5. |
+| Pending | Mysteri0K1ng / MedvAx-AI | Remaining work packages | — | — |
 
 Each person should have evidence of technical implementation, experimental reasoning, review/reproduction, writing and understanding. The final two-page summary needs a compact contribution statement for all four people; the repository log can retain detailed evidence.
 

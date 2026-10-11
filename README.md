@@ -4,7 +4,7 @@ Introduction to Computer Vision · Team of four · Plan revised: 2 October 2026
 
 Build an image classifier that can reject low-confidence predictions instead of always returning a class. Evaluate classification accuracy, confidence calibration, rejection thresholds, and performance under blur, noise, and JPEG compression.
 
-**Status:** repository, updated work plan and first-submission proposal prepared. Model implementation, experiments, measured results, final two-page summary, and demo are future team deliverables. This repository does not yet contain a runnable classifier or claim experimental results.
+**Status:** data pipeline and the frozen ResNet-18 development baseline are implemented. Temperature scaling, rejection, the locked final-test matrix, figures, the two-page summary, and the demo are still open. The accuracy below is clean model-validation performance, not a final-test result.
 
 ## Start here
 
@@ -44,9 +44,34 @@ The no-rejection calibrated condition isolates the calibration effect. It should
 
 ## Running the project
 
-There are no executable model commands yet. LeoVesinML owns publishing and independently verifying exact installation, download, training, evaluation, figure-generation, and demo commands by milestone M4. Their acceptance requirements are in [DELIVERABLES.md](docs/DELIVERABLES.md#reproducible-repository). Do not interpret planned filenames as files already implemented.
+Tested on Python 3.12.13, macOS 26.5 arm64, Apple M4 Pro, 48 GB, MPS. Pins are in `requirements.txt`. Dataset steps are in [data/README.md](data/README.md). Method, baseline numbers, and clocks are in [reports/method_runtime.md](reports/method_runtime.md).
 
-The final repository must include source or notebook, a tested `requirements.txt` or equivalent environment specification, data/weight retrieval instructions, saved metrics and figures, and all files needed to reproduce the reported result.
+Figure generation and the live demo are not implemented yet. Final test is intentionally not run by the training script.
+
+```bash
+python3.12 -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+python -m pip install -r requirements.txt
+
+python scripts/prepare_data.py --verify-only
+python -m pytest tests/test_model.py -q
+python scripts/train_baseline.py
+python scripts/train_baseline.py --verify-reload-only
+```
+
+These four commands were run on the machine above. `train_baseline.py` downloads CIFAR-10 into `data/raw/` when the archive is absent, then downloads the ImageNet weights. `python scripts/prepare_data.py` without `--verify-only` rewrites the split files; the committed manifests already pass verification, so leave them in place unless you mean to replace the IDs.
+
+`train_baseline.py` downloads `ResNet18_Weights.IMAGENET1K_V1` through torchvision from `https://download.pytorch.org/models/resnet18-f37072fd.pth`, freezes the backbone, trains the ten-class head on the training split only, and writes:
+
+- `artifacts/model/linear_head.npz` and `artifacts/model/checkpoint_manifest.json`
+- `artifacts/logits/{model_validation,calibration,policy_selection}_clean.npz`
+- `artifacts/baseline/development_baseline.json`, `development_predictions.csv`, `runtime_manifest.json`, `reload_check.json`
+
+Feature caches under `artifacts/features/` are local and gitignored. The `.npz` head in git is the retrieval artifact. `--verify-reload-only` loads that head and checks model-validation logits. It does not retrain.
+
+On the machine above, clean feature extraction of 15,000 images took 25.5 s, head training took 0.51 s, and full inference (transforms + backbone + head) took 3.03 s for 1,936 validation images after one warmup batch. The standalone reload command measured 2.94 s on a second pass. A fresh load matched saved logits within `1.14e-5` (tolerance `1e-4` in `configs/model.yaml`). Refitting from the same feature cache reproduced the head bytes. A CPU copy of the backbone differed by at most `3.2e-5` in feature space on a 32-image probe, so a from-scratch retrain on another device can move the head slightly. Use the committed head to reproduce the reported baseline.
+
+Seed is 42. The selected checkpoint is epoch 30, model-validation NLL 0.4245, clean accuracy 0.8645 on 2,000 images. That number is the no-rejection development baseline.
 
 ## Sources and provenance
 

@@ -1,0 +1,119 @@
+{
+  "saved_utc": "2026-10-11T17:53:28+00:00",
+  "role": "development raw-confidence no-rejection baseline",
+  "predates_comparisons": true,
+  "final_test_evaluated": false,
+  "split": "model_validation",
+  "corruption": "clean",
+  "severity": "none",
+  "class_order": [
+    "airplane",
+    "automobile",
+    "bird",
+    "cat",
+    "deer",
+    "dog",
+    "frog",
+    "horse",
+    "ship",
+    "truck"
+  ],
+  "checkpoint_sha256": "9a02afa9f5595437a35dcac020ccdf9fafc1944088948bdd781cb03f92eb107c",
+  "checkpoint_path": "artifacts/model/linear_head.npz",
+  "model_config_sha256": "d84e4d5adbd76ff2d23df2dc33ac09cec90cb999fe9bddc46acbe5db1b801fc9",
+  "split_manifest_sha256": "0a731713a64cd147594f806f19eff3e0ceaf7c9db1e1c0f8c116cf25787df2be",
+  "selected_epoch": 30,
+  "selected_val_nll": 0.4244807958602905,
+  "selection_rule": "lowest model-validation NLL; earliest epoch breaks ties",
+  "logit_npz_sha256": "ae0d2ccf366fd3a97d6fc39bbea1d058a35a63bd9e46a1c1c10aa488fd87dfd9",
+  "metrics": {
+    "condition": "A",
+    "confidence": "raw",
+    "temperature": 1.0,
+    "rejection": "disabled",
+    "n": 2000,
+    "correct": 1729,
+    "full_set_accuracy": 0.8645,
+    "coverage": 1.0,
+    "rejection_rate": 0.0,
+    "accepted_count": 2000,
+    "correct_accepted_count": 1729,
+    "accepted_accuracy": 0.8645,
+    "selective_risk": 0.13549999999999995,
+    "nll": 0.42448080269953425,
+    "ece": 0.02464885282071891,
+    "ece_bins": 15
+  },
+  "per_class": [
+    {
+      "label": 0,
+      "class_name": "airplane",
+      "count": 200,
+      "correct": 176,
+      "accuracy": 0.88
+    },
+    {
+      "label": 1,
+      "class_name": "automobile",
+      "count": 200,
+      "correct": 180,
+      "accuracy": 0.9
+    },
+    {
+      "label": 2,
+      "class_name": "bird",
+      "count": 200,
+      "correct": 155,
+      "accuracy": 0.775
+    },
+    {
+      "label": 3,
+      "class_name": "cat",
+      "count": 200,
+      "correct": 160,
+      "accuracy": 0.8
+    },
+    {
+      "label": 4,
+      "class_name": "deer",
+      "count": 200,
+      "correct": 169,
+      "accuracy": 0.845
+    },
+    {
+      "label": 5,
+      "class_name": "dog",
+      "count": 200,
+      "correct": 162,
+      "accuracy": 0.81
+    },
+    {
+      "label": 6,
+      "class_name": "frog",
+      "count": 200,
+      "correct": 182,
+      "accuracy": 0.91
+    },
+    {
+      "label": 7,
+      "class_name": "horse",
+      "count": 200,
+      "correct": 177,
+      "accuracy": 0.885
+    },
+    {
+      "label": 8,
+      "class_name": "ship",
+      "count": 200,
+      "correct": 179,
+      "accuracy": 0.895
+    },
+    {
+      "label": 9,
+      "class_name": "truck",
+      "count": 200,
+      "correct": 189,
+      "accuracy": 0.945
+    }
+  ]
+}
