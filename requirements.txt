@@ -1,0 +1,10 @@
+# Tested on Python 3.12.13, macOS 26.5 arm64, Apple M4 Pro (MPS).
+# Installed and imported by scripts/train_baseline.py on 11 October 2026.
+torch==2.14.1
+torchvision==0.29.1
+numpy==2.5.4
+pillow==12.3.0
+PyYAML==6.0.3
+pytest==9.1.1
+pandas==3.0.6
+matplotlib==3.11.2
