@@ -1,0 +1,71 @@
+# LeoVesinML model contract — frozen defaults from EXPERIMENT_PROTOCOL.md §3.
+# Do not retune these after the development baseline is saved. Final test is out of scope.
+
+model:
+  architecture: resnet18
+  weights: IMAGENET1K_V1
+  feature_dim: 512
+  num_classes: 10
+  freeze_backbone: true
+  backbone_eval_mode: true
+
+transform:
+  # Must match ResNet18_Weights.IMAGENET1K_V1.transforms(). Checked at runtime.
+  resize: 256
+  center_crop: 224
+  interpolation: bilinear
+  normalize_mean: [0.485, 0.456, 0.406]
+  normalize_std: [0.229, 0.224, 0.225]
+
+training:
+  seed: 42
+  loss: cross_entropy
+  optimizer: AdamW
+  lr: 0.001
+  weight_decay: 0.0001
+  feature_batch_size: 256
+  max_epochs: 30
+  selection_metric: model_validation_nll
+  tie_break: earliest_epoch
+  train_split: training
+  val_split: model_validation
+
+extraction:
+  batch_size: 64
+  device: auto
+  corruption: clean
+  severity: none
+  # final_test is intentionally absent: this package freezes the checkpoint before test.
+  splits:
+    - training
+    - model_validation
+    - calibration
+    - policy_selection
+
+baseline:
+  split: model_validation
+  condition: A
+  confidence: raw
+  temperature: 1.0
+  rejection: disabled
+
+logit_export_splits:
+  - model_validation
+  - calibration
+  - policy_selection
+
+reproducibility:
+  # Same-device fresh load of the committed head. Cross-device extraction can differ more;
+  # the measured gap is written into the runtime manifest after the run.
+  same_device_logit_atol: 1.0e-4
+
+paths:
+  features_dir: artifacts/features
+  checkpoint_npz: artifacts/model/linear_head.npz
+  checkpoint_manifest: artifacts/model/checkpoint_manifest.json
+  logits_dir: artifacts/logits
+  dev_fixture: artifacts/logits/dev_fixture.json
+  baseline_json: artifacts/baseline/development_baseline.json
+  predictions_csv: artifacts/baseline/development_predictions.csv
+  runtime_manifest: artifacts/baseline/runtime_manifest.json
+  reload_check: artifacts/baseline/reload_check.json

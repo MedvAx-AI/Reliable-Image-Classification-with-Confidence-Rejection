@@ -1,0 +1,24 @@
+{
+  "split": "policy_selection",
+  "corruption": "clean",
+  "severity": "none",
+  "n": 1500,
+  "class_order": [
+    "airplane",
+    "automobile",
+    "bird",
+    "cat",
+    "deer",
+    "dog",
+    "frog",
+    "horse",
+    "ship",
+    "truck"
+  ],
+  "checkpoint_sha256": "9a02afa9f5595437a35dcac020ccdf9fafc1944088948bdd781cb03f92eb107c",
+  "model_config_sha256": "d84e4d5adbd76ff2d23df2dc33ac09cec90cb999fe9bddc46acbe5db1b801fc9",
+  "split_manifest_sha256": "0a731713a64cd147594f806f19eff3e0ceaf7c9db1e1c0f8c116cf25787df2be",
+  "source": "cached_backbone_features_times_selected_head",
+  "final_test": false,
+  "npz_sha256": "6b349a07bea01ce5dc4766c51977099952893a8b36d4158d715187c6f6838db3"
+}

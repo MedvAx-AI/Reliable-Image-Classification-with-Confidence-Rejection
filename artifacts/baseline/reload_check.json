@@ -1,0 +1,25 @@
+{
+  "saved_utc": "2026-10-11T17:56:18+00:00",
+  "device": "mps",
+  "split": "model_validation",
+  "max_abs_logit_diff": 1.1444091796875e-05,
+  "same_device_logit_atol": 0.0001,
+  "within_atol": true,
+  "argmax_agreement": 1.0,
+  "batchnorm_buffers_unchanged": true,
+  "full_image_inference": {
+    "seconds": 2.941180623980472,
+    "images": 1936,
+    "images_per_second": 658.2390704654847,
+    "warmup_batches_excluded": 1,
+    "batch_size": 64,
+    "includes_backbone": true,
+    "includes": [
+      "in_memory_image_fetch",
+      "uint8_to_pil",
+      "imagenet_resize_crop_normalize",
+      "resnet18_backbone",
+      "linear_head"
+    ]
+  }
+}

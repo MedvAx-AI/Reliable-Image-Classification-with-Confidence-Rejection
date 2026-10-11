@@ -22,7 +22,7 @@ From the repository root, with Python 3.11+:
 python -m pip install torch torchvision numpy pillow pyyaml pytest
 ```
 
-Pin/tested environment for the full project is owned by LeoVesinML; the packages above are sufficient to reproduce the data pipeline.
+The tested project environment is `requirements.txt` (Python 3.12.13). The unpinned command above is enough for this data package alone.
 
 ## Prepare manifests + corruption QA panel
 
