@@ -5,6 +5,7 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .ipynb_checkpoints/
+reproduced/
 
 # Raw data and generated caches
 data/raw/

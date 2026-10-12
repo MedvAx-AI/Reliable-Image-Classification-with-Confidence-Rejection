@@ -1,0 +1,307 @@
+{
+  "run_id": "a9d534f5ff01664d",
+  "checkpoint_sha256": "9a02afa9f5595437a35dcac020ccdf9fafc1944088948bdd781cb03f92eb107c",
+  "model_config_sha256": "d84e4d5adbd76ff2d23df2dc33ac09cec90cb999fe9bddc46acbe5db1b801fc9",
+  "data_config_sha256": "59c544f2e2675329914d0cf106f0aa6c14369bc204e19723406aa6436c949bd4",
+  "split_manifest_sha256": "0a731713a64cd147594f806f19eff3e0ceaf7c9db1e1c0f8c116cf25787df2be",
+  "protocol_sha256": "df100b734eb68f9fc2e9d7e06a127f4a4e79156002ca175f8a285e6732669913",
+  "class_order": [
+    "airplane",
+    "automobile",
+    "bird",
+    "cat",
+    "deer",
+    "dog",
+    "frog",
+    "horse",
+    "ship",
+    "truck"
+  ],
+  "policy_sha256": "2f32e14855ee505da8b27ef46f38e2addc32b25f3f2709a7bb89232e95e5b7f6",
+  "split": "final_test",
+  "n_source_images": 2000,
+  "n_image_conditions": 10,
+  "n_policy_conditions": 4,
+  "aggregate_rows": 40,
+  "per_image_rows": 80000,
+  "actual_image_forwards_this_run": 20000,
+  "from_checked_cache": false,
+  "setup_seconds_this_run": 1.9925153000513092,
+  "cached_policy_evaluation_seconds": 0.3752558999694884,
+  "reproduction_environment": {
+    "os": "Windows-11-10.0.26300-SP0",
+    "python": "3.13.13",
+    "packages": {
+      "torch": "2.14.0",
+      "torchvision": "0.29.0",
+      "numpy": "2.4.6",
+      "pillow": "12.2.0",
+      "PyYAML": "6.0.3",
+      "pandas": "3.0.5",
+      "matplotlib": "3.11.0",
+      "pytest": "8.4.2"
+    },
+    "device": "cpu",
+    "torch_threads": 8,
+    "processor": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD"
+  },
+  "inference_records": [
+    {
+      "condition": "clean_none",
+      "seconds": 48.09269090031739,
+      "images": 1936,
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.13.13",
+        "packages": {
+          "torch": "2.14.0",
+          "torchvision": "0.29.0",
+          "numpy": "2.4.6",
+          "pillow": "12.2.0",
+          "PyYAML": "6.0.3",
+          "pandas": "3.0.5",
+          "matplotlib": "3.11.0",
+          "pytest": "8.4.2"
+        },
+        "device": "cpu",
+        "torch_threads": 8,
+        "processor": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD"
+      },
+      "logit_sha256": "29b8ff1f9ece4dc439b831564d76c450ef208fa6720e260dd184d7c441f13847",
+      "sidecar_sha256": "c7cf00e48351d726cdd97cd1012572737e05f326e55224509f5da8fae21c783a"
+    },
+    {
+      "condition": "gaussian_blur_mild",
+      "seconds": 45.30773860006593,
+      "images": 1936,
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.13.13",
+        "packages": {
+          "torch": "2.14.0",
+          "torchvision": "0.29.0",
+          "numpy": "2.4.6",
+          "pillow": "12.2.0",
+          "PyYAML": "6.0.3",
+          "pandas": "3.0.5",
+          "matplotlib": "3.11.0",
+          "pytest": "8.4.2"
+        },
+        "device": "cpu",
+        "torch_threads": 8,
+        "processor": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD"
+      },
+      "logit_sha256": "e6c2f8d5888c628ce62ed6b9b238d07721f2f6aec1729a0bd47557951e6b0aeb",
+      "sidecar_sha256": "d65511515d94afac160d6308fdd7677790de058e1a06750cf698fa04f7f087cf"
+    },
+    {
+      "condition": "gaussian_blur_medium",
+      "seconds": 44.08523130021058,
+      "images": 1936,
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.13.13",
+        "packages": {
+          "torch": "2.14.0",
+          "torchvision": "0.29.0",
+          "numpy": "2.4.6",
+          "pillow": "12.2.0",
+          "PyYAML": "6.0.3",
+          "pandas": "3.0.5",
+          "matplotlib": "3.11.0",
+          "pytest": "8.4.2"
+        },
+        "device": "cpu",
+        "torch_threads": 8,
+        "processor": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD"
+      },
+      "logit_sha256": "98ea8520a6a1d859b1a64cb226d703336432d6165057a9e5d25251c2119da431",
+      "sidecar_sha256": "39b3a48508b889d216fa682cca7f216e0eb67f5a20d47facdd868e36c3848cbc"
+    },
+    {
+      "condition": "gaussian_blur_severe",
+      "seconds": 52.477891200222075,
+      "images": 1936,
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.13.13",
+        "packages": {
+          "torch": "2.14.0",
+          "torchvision": "0.29.0",
+          "numpy": "2.4.6",
+          "pillow": "12.2.0",
+          "PyYAML": "6.0.3",
+          "pandas": "3.0.5",
+          "matplotlib": "3.11.0",
+          "pytest": "8.4.2"
+        },
+        "device": "cpu",
+        "torch_threads": 8,
+        "processor": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD"
+      },
+      "logit_sha256": "0c78e9d9d5874b91b7a765b944473b712109811991ae02be982e6bf057d34dec",
+      "sidecar_sha256": "3c1e11d69af35ac16d41f1b820aff39ccc04199aea34adc0f3222cc1e24816de"
+    },
+    {
+      "condition": "gaussian_noise_mild",
+      "seconds": 46.045191899873316,
+      "images": 1936,
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.13.13",
+        "packages": {
+          "torch": "2.14.0",
+          "torchvision": "0.29.0",
+          "numpy": "2.4.6",
+          "pillow": "12.2.0",
+          "PyYAML": "6.0.3",
+          "pandas": "3.0.5",
+          "matplotlib": "3.11.0",
+          "pytest": "8.4.2"
+        },
+        "device": "cpu",
+        "torch_threads": 8,
+        "processor": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD"
+      },
+      "logit_sha256": "c7c640bdfb6b8602dc1b0a4f2048ffe7a91652167fc6f9266594801aecb4a0fb",
+      "sidecar_sha256": "0453876c1838b28f4d1b86877a053e8be45f33345c0ba9ef3c1e7dc8b1dcbd00"
+    },
+    {
+      "condition": "gaussian_noise_medium",
+      "seconds": 40.82752890011761,
+      "images": 1936,
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.13.13",
+        "packages": {
+          "torch": "2.14.0",
+          "torchvision": "0.29.0",
+          "numpy": "2.4.6",
+          "pillow": "12.2.0",
+          "PyYAML": "6.0.3",
+          "pandas": "3.0.5",
+          "matplotlib": "3.11.0",
+          "pytest": "8.4.2"
+        },
+        "device": "cpu",
+        "torch_threads": 8,
+        "processor": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD"
+      },
+      "logit_sha256": "99b286197683b7ce32f1118ecf8f135b2a381318c545031b32c349eef3a4be0f",
+      "sidecar_sha256": "44d9e98eafb0bd9af941c60d2ffa6d36ac041e511e42d0fa254be5bbd1e5756b"
+    },
+    {
+      "condition": "gaussian_noise_severe",
+      "seconds": 42.89288079983089,
+      "images": 1936,
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.13.13",
+        "packages": {
+          "torch": "2.14.0",
+          "torchvision": "0.29.0",
+          "numpy": "2.4.6",
+          "pillow": "12.2.0",
+          "PyYAML": "6.0.3",
+          "pandas": "3.0.5",
+          "matplotlib": "3.11.0",
+          "pytest": "8.4.2"
+        },
+        "device": "cpu",
+        "torch_threads": 8,
+        "processor": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD"
+      },
+      "logit_sha256": "f903c8c3d4cc3d26de2b1c71d620931cfe5847169d9f7d76855bfc34e84c00cd",
+      "sidecar_sha256": "cdc8d1e8bcb53efbc9bd75a36ca880a81827ffd4c37590f73af200fe37e9b0f0"
+    },
+    {
+      "condition": "jpeg_mild",
+      "seconds": 44.093644299777225,
+      "images": 1936,
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.13.13",
+        "packages": {
+          "torch": "2.14.0",
+          "torchvision": "0.29.0",
+          "numpy": "2.4.6",
+          "pillow": "12.2.0",
+          "PyYAML": "6.0.3",
+          "pandas": "3.0.5",
+          "matplotlib": "3.11.0",
+          "pytest": "8.4.2"
+        },
+        "device": "cpu",
+        "torch_threads": 8,
+        "processor": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD"
+      },
+      "logit_sha256": "b2b999c882b3ef763ff562753adfa4debbc0de69cc8bfbe07891cf22050e3e31",
+      "sidecar_sha256": "561806bf623b31747115238c5f8a0b893354af3deaf5e195a2d88a0c2c1beca4"
+    },
+    {
+      "condition": "jpeg_medium",
+      "seconds": 40.477234899881296,
+      "images": 1936,
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.13.13",
+        "packages": {
+          "torch": "2.14.0",
+          "torchvision": "0.29.0",
+          "numpy": "2.4.6",
+          "pillow": "12.2.0",
+          "PyYAML": "6.0.3",
+          "pandas": "3.0.5",
+          "matplotlib": "3.11.0",
+          "pytest": "8.4.2"
+        },
+        "device": "cpu",
+        "torch_threads": 8,
+        "processor": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD"
+      },
+      "logit_sha256": "77cb3ff0c078d06affd2b85dbe7b07baea451c84457d17b8132a6b92122e7dcf",
+      "sidecar_sha256": "d068a0816578217d9673778658db1f2052bfcf55c85aeb704ae93b533fb77a82"
+    },
+    {
+      "condition": "jpeg_severe",
+      "seconds": 41.693168000434525,
+      "images": 1936,
+      "environment": {
+        "os": "Windows-11-10.0.26300-SP0",
+        "python": "3.13.13",
+        "packages": {
+          "torch": "2.14.0",
+          "torchvision": "0.29.0",
+          "numpy": "2.4.6",
+          "pillow": "12.2.0",
+          "PyYAML": "6.0.3",
+          "pandas": "3.0.5",
+          "matplotlib": "3.11.0",
+          "pytest": "8.4.2"
+        },
+        "device": "cpu",
+        "torch_threads": 8,
+        "processor": "AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD"
+      },
+      "logit_sha256": "249c059d9adf30fddf3f77cade45ffb4614316773a50cda4dabf2b376b6f7a87",
+      "sidecar_sha256": "7a6f49630026b733aaf5d63b70e613171ceb6cf530d193d12084a4bbf6c80454"
+    }
+  ],
+  "total_timed_image_seconds": 445.99320080073085,
+  "total_timed_images": 19360,
+  "batchnorm_unchanged": true,
+  "frozen_files_unchanged": true,
+  "no_policy_refitting": true,
+  "sensitivity_is_descriptive": true,
+  "artifacts_sha256": {
+    "final_metrics.json": "a638bead723006383c7d965474d984174771584be5e6c8be2093084e827cf797",
+    "final_metrics.csv": "9c5c7633e41406b3ea69e381542d51e130a1a58bbd6721769c8aff806e4094b5",
+    "sensitivity.json": "b0d0cfee4097f7d858a43d84c34fa9d4ce29cdcfe10677468ef0a9c1f11173a1",
+    "per_image.csv.gz": "c94cd7537194ef9ba56671c99a0900248d8edea7741fea28738f15fe03138c03",
+    "threshold_sweep.csv": "dd6d7413b730c76846ce00247ab9cb92417226c99b8b56ab8adf5ede8ad444e5",
+    "figures/reliability.png": "26ace9f942991fe96748f7d23c3127f2ad9789c0dcbe2bd7c049a3448883c656",
+    "figures/risk_coverage.png": "33354eb679d49e22328deba935a53e43052207216be9737972684bedac8d462e",
+    "figures/accuracy_coverage.png": "30c00025b7e68d9d943758dca2ed00a30db2f0a229f45684f6ff77e12dd113e3"
+  },
+  "saved_utc": "2026-10-12T16:07:53.631133+00:00"
+}
