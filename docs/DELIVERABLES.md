@@ -1,6 +1,6 @@
 # Deliverables, demonstration, and completion gates
 
-The first-submission proposal is prepared; the model, measured results, final summary and slides remain planned outputs. Keep the proposal and final results summary as separate deliverables.
+The proposal, first-working-model milestone, measured final experiment, two-page summary, three slides and live demo are prepared. Technical checks are recorded in [COMPLETION_AUDIT.md](COMPLETION_AUDIT.md). Actual course upload, timed rehearsal and supervised individual understanding remain human tasks. Keep milestone and final reports separate.
 
 ## First submission: implementation and evaluation proposal
 
@@ -117,21 +117,21 @@ During practice, rotate questions; no person relies on another teammate to answe
 
 - [ ] Assigned topic and four recorded names are confirmed following the historical 16 September registration deadline; final deadline and demo timing confirmed.
 - [ ] First-submission proposal covers the five screenshot sections and is submitted by the team by the confirmed initial deadline.
-- [ ] Source code or executable notebook exists; no missing files or inaccessible artifacts.
-- [ ] README has exact tested commands for setup, data, training/checkpoint loading, evaluation, plots and demo.
-- [ ] `requirements.txt` / environment description and real hardware/software/runtime record are present.
-- [ ] Dataset source/download/checksum, class order, preprocessing, split sizes/IDs and leakage checks are recorded.
-- [ ] Baseline and second condition(s) use a controlled comparison and a fixed checkpoint.
-- [ ] At least two appropriate metrics are computed correctly; accepted accuracy is paired with coverage/counts.
-- [ ] Clean, blurred, noisy and JPEG-compressed evaluations are complete.
-- [ ] Calibration and threshold selection use their own held-out data; no test tuning.
-- [ ] Threshold sensitivity is complete with a clear interpretation.
-- [ ] Final metrics, figures, per-image evidence, temperature/policy values and run identifiers are saved.
-- [ ] At least three failures have likely causes and limitations; one is ready for the demo.
-- [ ] An independent fresh-environment run reproduces the reported outputs within declared tolerance.
-- [ ] Technical summary PDF is exactly two pages and contains all eight template sections, one compact figure/table, experimental result, and every student's contribution.
+- [x] Source code or executable notebook exists; no missing files or inaccessible artifacts.
+- [x] README has exact tested commands for setup, data, training/checkpoint loading, evaluation, plots and demo.
+- [x] `requirements.txt` / environment description and real hardware/software/runtime record are present.
+- [x] Dataset source/download/checksum, class order, preprocessing, split sizes/IDs and leakage checks are recorded.
+- [x] Baseline and second condition(s) use a controlled comparison and a fixed checkpoint.
+- [x] At least two appropriate metrics are computed correctly; accepted accuracy is paired with coverage/counts.
+- [x] Clean, blurred, noisy and JPEG-compressed evaluations are complete.
+- [x] Calibration and threshold selection use their own held-out data; no test tuning.
+- [x] Threshold sensitivity is complete with a clear interpretation.
+- [x] Final metrics, figures, per-image evidence, temperature/policy values and run identifiers are saved.
+- [x] At least three failures have likely causes and limitations; one is ready for the demo.
+- [x] An independent fresh-environment run reproduces the reported outputs within declared tolerance.
+- [x] Technical summary PDF is exactly two pages and contains all eight template sections, one compact figure/table, experimental result, and every student's contribution.
 - [ ] Maximum three slides; five-minute demonstration rehearsed, with a live path and clear research-question answer.
-- [ ] All four names/course identities and actual contributions are recorded.
+- [x] All four names/course identities and actual contributions are recorded.
 - [ ] Every member can independently answer model, metric, result, threshold and failure questions.
 - [ ] Repository and submission links are accessible to the instructor; report/figures correspond to the final commit.
 
