@@ -1,7 +1,7 @@
 {
   "date": "2026-10-12",
   "run_id": "a9d534f5ff01664d",
-  "full_suite_passed": 94,
+  "full_suite_passed": 98,
   "fresh_environment": "Python 3.13.13 Windows CPU, requirements-evaluation-lock.txt",
   "cached_replay_byte_identical": [
     "final_metrics.csv",
@@ -31,5 +31,12 @@
     "slides": 3
   },
   "all_pdf_pages_visually_inspected": true,
-  "human_rehearsal_or_course_submission_verified": false
+  "human_rehearsal_or_course_submission_verified": false,
+  "source_drift_regressions_passed": 4,
+  "live_demo_selection_regression_passed": true,
+  "review_head": "4dc3d4377388e7d39fb8c2cf8a642386f7bc87ba",
+  "important_review_findings_fixed": [
+    "Verifier rejects current inference source drift",
+    "Demo clears stale results and locks selection while running"
+  ]
 }

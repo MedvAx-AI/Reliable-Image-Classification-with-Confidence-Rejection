@@ -11,6 +11,7 @@ import numpy as np
 
 from src.corruptions import corruption_specs, image_sha256
 from src.data import sha256_file, sha256_json, sha256_text_file
+from src.evaluation_provenance import inference_code_hashes, validate_inference_provenance
 from src.policy_artifacts import current_provenance, load_checked_logits, load_frozen_policy, read_json
 
 
@@ -27,6 +28,7 @@ def verify(root: Path = ROOT) -> dict:
     provenance, manifest = current_provenance(root)
     require(saved['policy_sha256'] == sha256_text_file(root/'artifacts/policy.json'), 'policy hash mismatch')
     require(all(saved[k]==v for k,v in provenance.items()), 'run provenance mismatch')
+    code_hashes = inference_code_hashes(root)
     rows = read_json(root/'results/final_metrics.json')['metrics']
     require(len(rows)==40, 'expected 40 aggregate rows')
     aggregates = {(r['corruption'],r['severity'],r['condition']):r for r in rows}
@@ -41,6 +43,7 @@ def verify(root: Path = ROOT) -> dict:
         require(sha256_text_file(path.with_suffix('.json'))==record['sidecar_sha256'], 'recorded sidecar hash mismatch')
         data = load_checked_logits(path,expected_split='final_test',manifest=manifest,provenance=provenance)
         meta = data['metadata']
+        validate_inference_provenance(meta, provenance, saved['policy_sha256'], code_hashes)
         require((meta['corruption'],meta['severity'])==key, 'condition filename mismatch')
         require(len(meta['image_sha256'])==2000 and sha256_json(meta['image_sha256'])==meta['image_hashes_sha256'],
                 'native image hash evidence mismatch')

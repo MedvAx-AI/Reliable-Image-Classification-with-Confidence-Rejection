@@ -20,6 +20,7 @@ from src.corruptions import corruption_specs, image_sha256
 from src.data import Cifar10SplitDataset, download_cifar10, load_config, sha256_file, sha256_json, sha256_text_file
 from src.evaluate import (condition_key, evaluate_matrix, write_csv, METRIC_COLUMNS,
                           PER_IMAGE_COLUMNS, SWEEP_COLUMNS)
+from src.evaluation_provenance import inference_code_hashes, validate_inference_provenance
 from src.model import build_frozen_resnet18, choose_device, load_head_npz, save_array_artifact
 from src.plots import plot_final_results
 from src.policy_artifacts import current_provenance, load_checked_logits, load_frozen_policy, read_json, write_json
@@ -75,8 +76,7 @@ def run(*, output_dir: Path, from_cache: bool, device_name: str, batch_size: int
         bn_before = model.batchnorm_buffer_sha256()
     setup_seconds = time.perf_counter() - setup_started
     bundles, clocks = [], []
-    code_hashes = {p: sha256_text_file(ROOT / p) for p in
-                   ('src/data.py', 'src/corruptions.py', 'src/model.py', 'src/predict.py')}
+    code_hashes = inference_code_hashes(ROOT)
     original_records = read_json(ROOT / 'results/run_manifest.json')['inference_records'] if from_cache else None
     for spec in corruption_specs(cfg):
         key = condition_key(spec)
@@ -89,10 +89,7 @@ def run(*, output_dir: Path, from_cache: bool, device_name: str, batch_size: int
             meta = data['metadata']
             if (meta['corruption'], meta['severity']) != (spec['corruption'], spec['severity']):
                 raise ValueError('cached condition does not match its filename')
-            if meta.get('data_config_sha256') != provenance['data_config_sha256'] or meta.get('code_hashes') != code_hashes:
-                raise ValueError('cached data/preprocessing implementation changed')
-            if meta.get('policy_sha256') != policy_hash:
-                raise ValueError('policy changed since final inference')
+            validate_inference_provenance(meta, provenance, policy_hash, code_hashes)
         else:
             print(f"Inferring {key}: 2000 final-test images ...", flush=True)
             dataset = AuditedDataset(Cifar10SplitDataset('final_test', config=cfg, manifest=manifest,

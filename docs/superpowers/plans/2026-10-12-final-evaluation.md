@@ -55,5 +55,5 @@ Consumes: measured final artifacts. Produces: exactly two summary pages, three s
 
 - [x] Reproduce cached outputs in a fresh environment without changing policy files; verify numbers independently.
 - [x] Generate report/slides from recorded measurements and inspect every rendered page.
-- [ ] Run full tests, verify all required links/artifacts and request one independent whole-branch review.
+- [x] Run full tests, verify all required links/artifacts and request one independent whole-branch review.
 - [ ] Fix substantive review findings, publish an attached PR and report any remaining human completion gates.

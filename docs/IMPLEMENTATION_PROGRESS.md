@@ -17,3 +17,17 @@ Task 2: complete. Failure selection tests and real-pixel demo test passed. Three
 Task 3: packaging complete; independent review pending. Exactly two summary pages and three slides rendered and inspected. All eight sections and repository/source links are present. Fresh cached replay reproduced six outputs byte-for-byte. Full image rerun in the fresh environment completed: 20,000 forwards, identical ordered IDs/labels, maximum logit difference zero and six outputs byte-identical.
 
 Baseline prediction CSV normalization changes CRLF to LF only; the logical content is identical (`git diff --ignore-space-at-eol` passed). No baseline prediction or fitting parameter changes.
+
+Final review: independent fresh-context reviewer inspected cb4dbd9..4dc3d43, ran 94 tests and the count verifier, checked PDF counts/text and representative live HTTP cases. No Critical findings.
+
+Final: fixed missing current-source validation in the independent verifier — four source-drift regression cases observed FAIL (DID NOT RAISE), then PASS with shared runner/verifier source/data-config/policy checks; complete suite 98/98 passed.
+
+Final: Ruling: re-grade stale demo display from Minor to Important — changing a sample could put a new cause explanation beside an old prediction, misleading the presentation. Fix clears predictions on example/condition/severity changes and locks selection while running. Browser regression RED→GREEN, including observed lock state during an uncached condition. Cost if wrong: small additional interface state logic; numerical model behavior unchanged.
+
+Final: Ruling: actual rehearsal/registration/course upload/supervised understanding remain human gates — prepared artifacts are not proof these happened. Cost if wrong: a student could otherwise mistake readiness for course completion.
+
+Final: Ruling: pretraining duplicate-freedom and internal causal failure explanations are not established — retain visual causes as hypotheses and limited generalization. Cost if wrong: results could otherwise be overstated.
+
+Final: Ruling: reviewer did not repeat the complete 20,000-forward run — executor did run it in the fresh environment and compared all logits/IDs/labels and six outputs exactly; reviewer independently checked metrics and representative live inference. Cost if wrong: an unobserved platform-specific issue outside the recorded CPU environment; no cross-device equality is promised.
+
+Task 3: complete technical packaging and review fixes. Replayed cache after fix, six outputs still identical. No deferred Minor findings (the stale display issue was re-graded by its effect and fixed). Public PR publication remains the final integration step.

@@ -13,7 +13,7 @@ Technical readiness against the supplied course PDF, four-person plan and milest
 | Three real failures with causes/limitations | `reports/failure_analysis.md`, source IDs/paired images/counts, hypotheses separated from observations | Verified |
 | Environment/training/inference clocks | Baseline runtime artifact and `results/run_manifest.json`; README timing inclusions | Verified |
 | Reproducible code/checkpoint retrieval | Committed head/logits/policies, official data/pretrained URLs, tested README commands | Verified locally; publication checked separately |
-| Independent fresh-environment evidence | 94 tests; all 40 metric sets, 80,000 decisions, 2,020 sweep counts; six cached outputs byte-identical | Verified; fresh 20,000-forward rerun has identical logits and six outputs, recorded in `results/verification.json` |
+| Independent fresh-environment evidence | 98 tests; all 40 metric sets, 80,000 decisions, 2,020 sweep counts; six cached outputs byte-identical | Verified; fresh 20,000-forward rerun has identical logits and six outputs, recorded in `results/verification.json` |
 | Exactly two pages/eight sections/table/figure/contributions | `reports/technical_summary.md` and PDF, every page inspected | Verified |
 | At most three slides and live path | Three-page slides, real model inference in `demo.py`, browser checks of measured cases | Verified |
 | Five-minute demo/fallback | `reports/demo_script.md`, saved slides/panel | Prepared; actual two timed rehearsals pending |

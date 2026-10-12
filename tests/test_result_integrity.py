@@ -19,3 +19,12 @@ def test_verification_rejects_changed_metric_bytes(tmp_path):
         stream.write('changed\n')
     with pytest.raises(ValueError,match='artifact hash'):
         verify(tmp_path)
+@pytest.mark.parametrize('source', ['src/data.py', 'src/corruptions.py', 'src/model.py', 'src/predict.py'])
+def test_verifier_rejects_current_inference_source_drift(tmp_path, source):
+    from scripts.verify_results import verify
+    for directory in ('artifacts', 'configs', 'docs', 'src', 'results'):
+        shutil.copytree(ROOT / directory, tmp_path / directory)
+    changed = tmp_path / source
+    changed.write_bytes(changed.read_bytes() + b'\n# changed since the recorded inference\n')
+    with pytest.raises(ValueError, match='inference source'):
+        verify(tmp_path)
