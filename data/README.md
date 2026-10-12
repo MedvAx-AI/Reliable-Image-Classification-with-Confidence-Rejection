@@ -47,6 +47,8 @@ Re-check an existing manifest without rebuilding:
 python scripts/prepare_data.py --verify-only
 ```
 
+Split-file SHA-256 values are hashes of the LF text. Verification converts CR LF to LF first, so a Windows checkout with `core.autocrlf` still passes. `.gitattributes` also asks Git to keep these files on LF.
+
 Run unit tests:
 
 ```bash

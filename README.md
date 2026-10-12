@@ -59,7 +59,7 @@ python scripts/train_baseline.py
 python scripts/train_baseline.py --verify-reload-only
 ```
 
-These four commands were run on the machine above. `train_baseline.py` downloads CIFAR-10 into `data/raw/` when the archive is absent, then downloads the ImageNet weights. `python scripts/prepare_data.py` without `--verify-only` rewrites the split files; the committed manifests already pass verification, so leave them in place unless you mean to replace the IDs.
+These four commands were run on the machine above. `train_baseline.py` downloads CIFAR-10 into `data/raw/` when the archive is absent, then downloads the ImageNet weights. `python scripts/prepare_data.py` without `--verify-only` rewrites the split files; the committed manifests already pass verification, so leave them in place unless you mean to replace the IDs. `--verify-only` hashes each split file after folding CR LF to LF, so the same command passes on a Windows checkout. `.gitattributes` tells Git to leave those files on LF.
 
 `train_baseline.py` downloads `ResNet18_Weights.IMAGENET1K_V1` through torchvision from `https://download.pytorch.org/models/resnet18-f37072fd.pth`, freezes the backbone, trains the ten-class head on the training split only, and writes:
 
@@ -67,9 +67,9 @@ These four commands were run on the machine above. `train_baseline.py` downloads
 - `artifacts/logits/{model_validation,calibration,policy_selection}_clean.npz`
 - `artifacts/baseline/development_baseline.json`, `development_predictions.csv`, `runtime_manifest.json`, `reload_check.json`
 
-Feature caches under `artifacts/features/` are local and gitignored. The `.npz` head in git is the retrieval artifact. `--verify-reload-only` loads that head and checks model-validation logits. It does not retrain.
+Feature caches under `artifacts/features/` are local and gitignored. A cache is reused only when the npz SHA-256 matches its sidecar and the saved extraction record matches this run: weights, transform, device, batch size, model-config hash, and split-manifest hash. Anything else stops the run; pass `--reextract`. The `.npz` head in git is the retrieval artifact. `--verify-reload-only` loads that head and checks model-validation logits. It does not retrain.
 
-On the machine above, clean feature extraction of 15,000 images took 25.5 s, head training took 0.51 s, and full inference (transforms + backbone + head) took 3.03 s for 1,936 validation images after one warmup batch. The standalone reload command measured 2.94 s on a second pass. A fresh load matched saved logits within `1.14e-5` (tolerance `1e-4` in `configs/model.yaml`). Refitting from the same feature cache reproduced the head bytes. A CPU copy of the backbone differed by at most `3.2e-5` in feature space on a 32-image probe, so a from-scratch retrain on another device can move the head slightly. Use the committed head to reproduce the reported baseline.
+On the machine above, clean feature extraction of 15,000 images took 25.5 s and head training took 0.51 s. Full inference, with the clock covering in-memory image fetch, transforms, the backbone, and the head, took 2.91 s for 1,936 validation images after one warmup batch. A fresh load matched saved logits within `1.14e-5` (tolerance `1e-4` in `configs/model.yaml`). Refitting from the same feature cache reproduced the head bytes. A CPU copy of the backbone differed by at most `3.2e-5` in feature space on a 32-image probe, so a from-scratch retrain on another device can move the head slightly. Use the committed head to reproduce the reported baseline.
 
 Seed is 42. The selected checkpoint is epoch 30, model-validation NLL 0.4245, clean accuracy 0.8645 on 2,000 images. That number is the no-rejection development baseline.
 

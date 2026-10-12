@@ -53,7 +53,7 @@ Measured on macOS 26.5.2 arm64, Apple M4 Pro, 48 GB RAM, Python 3.12.13, torch 2
 |---|---|---|
 | Feature extraction | in-memory CIFAR fetch, resize/crop/normalize, frozen backbone. Batch size 64. | 25.5 s for 15,000 clean development images (10,000 train in 16.7 s, 2,000 validation in 3.2 s, 1,500 calibration in 2.7 s, 1,500 policy in 2.8 s) |
 | Head training | AdamW on cached 512-d features, CPU, 30 epochs. No backbone. | 0.51 s |
-| Full image inference | same fetch and transforms, backbone, and head, after one warmup batch of 64 | 3.03 s for the remaining 1,936 validation images (639 images/s). A later standalone `--verify-reload-only` pass measured 2.94 s |
+| Full image inference | in-memory image fetch, transforms, backbone, and head, after one warmup batch of 64. The clock starts before the fetch. | 2.91 s for the remaining 1,936 validation images (665 images/s), remeasured 12 October 2026. An earlier 3.03 s figure left the fetch outside the clock and is not the reported time |
 | Cached logit evaluation | log-softmax, argmax, and NLL on the 2,000 saved validation logits. No backbone. | 0.10 ms per pass |
 
 A 32-image CPU copy of the same backbone differed from MPS features by at most `3.24e-5`. Refitting the head from the saved feature cache on this machine reproduced the committed weights exactly. A new extraction on another device can move features by about that gap, so the reported baseline should be reloaded from `artifacts/model/linear_head.npz`, not assumed bit-identical after a from-scratch retrain.
@@ -71,5 +71,5 @@ The split ID hash `0a731713a64cd147594f806f19eff3e0ceaf7c9db1e1c0f8c116cf25787df
 1. Why this backbone and a new head? CIFAR-10 has ten classes. The ImageNet head has a thousand, so its scores are the wrong label space. Freezing ResNet-18 and training a linear layer keeps the experiment small and makes the checkpoint one shared object for every later condition.
 2. What is model validation for? It picks the head checkpoint by NLL. It does not fit temperature and it does not pick the rejection threshold. Those two decisions have their own splits. Final test is unused until those decisions are frozen.
 3. What did temperature change in this package? Nothing in the weights. Dividing logits by a positive T cannot change `argmax`. Accuracy of condition A and a later no-rejection calibrated condition should match if the checkpoint is the same.
-4. What do the clocks mean? The 3.03 s figure includes the backbone. The 0.10 ms figure does not. Reporting only the cached pass would hide the cost of the network.
+4. What do the clocks mean? The 2.91 s figure includes image fetch and the backbone. The 0.10 ms figure does not. Reporting only the cached pass would hide the cost of the network.
 5. What is the 0.8645 accuracy? Clean model-validation accuracy of the raw model with no rejection, on 2,000 images. It is the baseline that later conditions must cite. It is not a final-test result and it is not an accepted-accuracy claim under a threshold.

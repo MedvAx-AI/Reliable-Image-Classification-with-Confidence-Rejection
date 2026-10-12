@@ -57,9 +57,9 @@
   "extraction_seconds_total": 25.450614333938574,
   "training_seconds": 0.5100637920259032,
   "full_image_inference": {
-    "seconds": 3.029610999918077,
+    "seconds": 2.9105661248904653,
     "images": 1936,
-    "images_per_second": 639.0259343699079,
+    "images_per_second": 665.1626923861276,
     "warmup_batches_excluded": 1,
     "batch_size": 64,
     "includes_backbone": true,
@@ -69,7 +69,9 @@
       "imagenet_resize_crop_normalize",
       "resnet18_backbone",
       "linear_head"
-    ]
+    ],
+    "remeasured_utc": "2026-10-12T06:20:03+00:00",
+    "note": "Remeasured after the timer was moved to start before image fetch. The earlier 3.03 s figure excluded that fetch."
   },
   "cached_logit_evaluation": {
     "repeats": 20,
@@ -101,7 +103,7 @@
   "baseline_path": "artifacts/baseline/development_baseline.json",
   "final_test_evaluated": false,
   "notes": [
-    "Full image inference time includes in-memory fetch, ImageNet transforms, the ResNet-18 backbone, and the linear head.",
+    "Full image inference time includes in-memory fetch, ImageNet transforms, the ResNet-18 backbone, and the linear head. The reported 2.91 s figure was remeasured with the fetch inside the clock.",
     "Cached logit evaluation is softmax/NLL on saved logits and does not run the backbone.",
     "Feature caches under artifacts/features/ are local and gitignored. The linear head npz is the retrieval artifact."
   ]
