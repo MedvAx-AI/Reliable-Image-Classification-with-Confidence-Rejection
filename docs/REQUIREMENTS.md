@@ -35,6 +35,8 @@ The PDF supplies course constraints. The user's request authorizes creating the 
 
 ## First-submission proposal requirements (2 October screenshot)
 
+Issue #3 development evidence (12 October 2026): R06/R07/R08 and T01/T02/T03 now have executable metrics/policies, fitted artifacts and clean model-validation comparisons in [calibration_rejection.md](../reports/calibration_rejection.md) and `artifacts/policy_development/`. The report includes interpretation, leakage-check review (R10), cached-calibration clocks (R11), Q&A notes (R19) and contribution evidence (R20). Final-test comparisons, reliability figures, real corruption sensitivity and demo outcomes remain pending Issue #4; development evidence does not complete R15 or T04.
+
 The screenshot adds an initial implementation/evaluation report; it does not replace final experiment evidence. These five rows are fulfilled by the proposal content, while the final-course evidence above remains future work.
 
 | ID | Required section | Evidence in first_submission.md / PDF | Section owner |

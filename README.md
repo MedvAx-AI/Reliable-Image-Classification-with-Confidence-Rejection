@@ -4,7 +4,7 @@ Introduction to Computer Vision · Team of four · Plan revised: 2 October 2026
 
 Build an image classifier that can reject low-confidence predictions instead of always returning a class. Evaluate classification accuracy, confidence calibration, rejection thresholds, and performance under blur, noise, and JPEG compression.
 
-**Status:** data pipeline and the frozen ResNet-18 development baseline are implemented. Temperature scaling, rejection, the locked final-test matrix, figures, the two-page summary, and the demo are still open. The accuracy below is clean model-validation performance, not a final-test result.
+**Status:** data pipeline, frozen ResNet-18 development baseline, temperature scaling, rejection policies, metrics and sensitivity interfaces are implemented. Clean development comparisons and a risk–coverage figure are saved. The integrated final-test matrix, final figures, two-page summary and demo remain open in Issue #4. Numbers below are development results, not final-test results.
 
 ## Start here
 
@@ -16,6 +16,7 @@ Build an image classifier that can reject low-confidence predictions instead of 
 - [Submission and presentation plan](docs/DELIVERABLES.md): reproducibility, two-page summary, five-minute demo, and individual Q&A.
 - [Contribution log](docs/CONTRIBUTIONS.md): add course names and record actual work.
 - [Dataset instructions](data/README.md): planned download and split procedure.
+- [Calibration, metrics and policy handoff](reports/calibration_rejection.md): fitted policies, development comparisons, split-check review and team Q&A.
 
 ## Research question
 
@@ -46,7 +47,7 @@ The no-rejection calibrated condition isolates the calibration effect. It should
 
 Tested on Python 3.12.13, macOS 26.5 arm64, Apple M4 Pro, 48 GB, MPS. Pins are in `requirements.txt`. Dataset steps are in [data/README.md](data/README.md). Method, baseline numbers, and clocks are in [reports/method_runtime.md](reports/method_runtime.md).
 
-Figure generation and the live demo are not implemented yet. Final test is intentionally not run by the training script.
+Final-matrix figure generation and the live demo remain with Issue #4. Final test is intentionally not run by the training or policy-fitting scripts.
 
 ```bash
 python3.12 -m venv .venv
@@ -72,6 +73,24 @@ Feature caches under `artifacts/features/` are local and gitignored. A cache is 
 On the machine above, clean feature extraction of 15,000 images took 25.5 s and head training took 0.51 s. Full inference, with the clock covering in-memory image fetch, transforms, the backbone, and the head, took 2.91 s for 1,936 validation images after one warmup batch. A fresh load matched saved logits within `1.14e-5` (tolerance `1e-4` in `configs/model.yaml`). Refitting from the same feature cache reproduced the head bytes. A CPU copy of the backbone differed by at most `3.2e-5` in feature space on a 32-image probe, so a from-scratch retrain on another device can move the head slightly. Use the committed head to reproduce the reported baseline.
 
 Seed is 42. The selected checkpoint is epoch 30, model-validation NLL 0.4245, clean accuracy 0.8645 on 2,000 images. That number is the no-rejection development baseline.
+
+## Calibration and rejection (Issue #3)
+
+Use the committed calibration and policy-selection logits; no image downloads or backbone forwards are needed for these steps. After installing `requirements.txt`, run:
+
+```bash
+python -m pytest tests/test_policies.py tests/test_model.py tests/test_manifest_newlines.py -q
+python scripts/fit_policies.py
+python scripts/analyze_policy_logits.py
+```
+
+The first script fits T only on clean calibration logits and selects thresholds only on clean policy-selection logits. It verifies manifest disjointness, ordered IDs/labels, NPZ hashes, class order and checkpoint/config provenance before fitting. It saves `artifacts/temperature.json` and `artifacts/policy.json`. For independent reproduction without replacing the frozen artifacts, use `python scripts/fit_policies.py --output-dir artifacts/policy_reproduction` and compare T, objectives and selected counts; timestamps and measured runtimes can differ.
+
+Saved T is **0.95616878**. Raw/calibrated thresholds are **0.56/0.57**, chosen from the fixed 101-point grid to maximize coverage subject to accepted accuracy ≥90% and coverage ≥20%. Both are feasible on the policy split; this is an empirical selection result, not an accuracy guarantee.
+
+The analysis script loads the frozen policies without fitting, reports A–D on the clean model-validation logits, and saves metrics JSON/CSV, 8,000 sample decisions, the 202-row raw/calibrated threshold sweep, matched-coverage diagnostics and a risk–coverage plot under `artifacts/policy_development/`. Full accuracy is 86.45% for every policy. B/D each retain 1,770/2,000 images (88.5% coverage), with accepted accuracy 91.47%/91.36%. Full-set ECE changes from 0.02465 to 0.02320; the different accepted populations prevent attributing B–D accuracy differences solely to calibration.
+
+For another cached clean/corrupted model-validation condition, supply `--logits PATH --output-dir DIR`. For the later locked test run, Issue #4 must export matching logit artifacts first; final-test reporting additionally requires `--allow-final-test`. The saved clean-fitted T and thresholds apply to every severity. The loader stops if checkpoint, protocol, configs, fitting inputs or temperature artifact have changed. Test sensitivity is descriptive and cannot select a new operating threshold. See the [handoff report](reports/calibration_rejection.md) for Python interfaces and definitions.
 
 ## Sources and provenance
 

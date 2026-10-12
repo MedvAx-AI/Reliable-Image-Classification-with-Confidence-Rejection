@@ -1,0 +1,19 @@
+# Issue #3: freeze these settings before any final-test reporting.
+calibration:
+  optimizer: golden_section_log_temperature
+  initial_log_temperature: 0.0
+  log_temperature_bounds: [-5.0, 5.0]
+  tolerance: 1.0e-8
+  objective_tolerance: 1.0e-10
+  max_iterations: 200
+metrics:
+  ece_bins: 15
+rejection:
+  threshold_grid: {start: 0.0, stop: 1.0, step: 0.01}
+  target_accepted_accuracy: 0.90
+  minimum_coverage: 0.20
+  fallback_threshold: 0.80
+  selection_rule: maximum coverage; smallest threshold breaks ties
+diagnostics:
+  matched_coverages: [0.50, 0.80, 1.00]
+  interpretation: descriptive sensitivity only; never select policies on final test
