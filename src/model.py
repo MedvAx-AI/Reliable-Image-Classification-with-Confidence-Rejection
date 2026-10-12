@@ -246,10 +246,55 @@ def save_array_artifact(
     sidecar = path.with_suffix(".json")
     metadata = dict(metadata)
     metadata["npz_sha256"] = sha256_file(path)
-    with sidecar.open("w", encoding="utf-8") as f:
+    with sidecar.open("w", encoding="utf-8", newline="\n") as f:
         json.dump(metadata, f, indent=2)
         f.write("\n")
     return {"npz": str(path), "json": str(sidecar), "npz_sha256": metadata["npz_sha256"], "json_sha256": sha256_file(sidecar)}
+
+
+FEATURE_PROVENANCE_KEYS = (
+    "split",
+    "corruption",
+    "severity",
+    "feature_dim",
+    "batch_size",
+    "device",
+    "weights_enum",
+    "weights_url",
+    "transform",
+    "model_config_sha256",
+    "split_manifest_sha256",
+)
+
+
+def feature_provenance(
+    *,
+    split: str,
+    corruption: str,
+    severity: str,
+    feature_dim: int,
+    batch_size: int,
+    device: str,
+    weights_enum: str,
+    weights_url: str | None,
+    transform: dict[str, Any] | None,
+    model_config_sha256: str,
+    split_manifest_sha256: str,
+) -> dict[str, Any]:
+    """Fields that must match before a feature cache may be reused."""
+    return {
+        "split": split,
+        "corruption": corruption,
+        "severity": severity,
+        "feature_dim": int(feature_dim),
+        "batch_size": int(batch_size),
+        "device": str(device),
+        "weights_enum": weights_enum,
+        "weights_url": weights_url,
+        "transform": transform,
+        "model_config_sha256": model_config_sha256,
+        "split_manifest_sha256": split_manifest_sha256,
+    }
 
 
 def load_feature_cache(path: str | Path) -> dict[str, Any]:
@@ -260,6 +305,45 @@ def load_feature_cache(path: str | Path) -> dict[str, Any]:
             "labels": np.asarray(payload["labels"], dtype=np.int64),
             "source_ids": source_ids,
         }
+
+
+def load_checked_feature_cache(
+    path: str | Path,
+    *,
+    expected_ids: list[str],
+    expected_labels: list[int],
+    provenance: dict[str, Any],
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    """Load a feature npz only when its hash, rows, and extraction record match."""
+    path = Path(path)
+    sidecar_path = path.with_suffix(".json")
+    if not sidecar_path.is_file():
+        raise RuntimeError(f"{path.name}: missing feature sidecar {sidecar_path.name}")
+    sidecar = json.loads(sidecar_path.read_text(encoding="utf-8"))
+    actual_hash = sha256_file(path)
+    recorded_hash = sidecar.get("npz_sha256")
+    if recorded_hash != actual_hash:
+        raise RuntimeError(
+            f"{path.name}: sha256 is {actual_hash}, sidecar records {recorded_hash}"
+        )
+    cache = load_feature_cache(path)
+    if cache["source_ids"] != list(expected_ids) or cache["labels"].tolist() != list(expected_labels):
+        raise RuntimeError(f"{path.name}: cached rows do not match the manifest")
+    if tuple(cache["features"].shape) != (len(expected_ids), int(provenance["feature_dim"])):
+        raise RuntimeError(
+            f"{path.name}: feature shape {tuple(cache['features'].shape)} "
+            f"does not match {(len(expected_ids), int(provenance['feature_dim']))}"
+        )
+    mismatches = []
+    for key in FEATURE_PROVENANCE_KEYS:
+        if key not in provenance:
+            raise RuntimeError(f"feature provenance is missing {key}")
+        if sidecar.get(key) != provenance[key]:
+            mismatches.append(f"{key}: cache={sidecar.get(key)!r} run={provenance[key]!r}")
+    if mismatches:
+        details = "; ".join(mismatches)
+        raise RuntimeError(f"{path.name}: extraction provenance does not match this run ({details})")
+    return cache, sidecar
 
 
 def load_logit_cache(path: str | Path) -> dict[str, Any]:

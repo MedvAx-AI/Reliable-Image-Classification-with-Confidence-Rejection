@@ -21,8 +21,8 @@ from src.data import (
     load_config,
     load_manifest,
     prepare_all,
-    sha256_file,
     sha256_json,
+    sha256_text_file,
     verify_manifest_directory,
 )
 
@@ -100,7 +100,7 @@ def test_verify_detects_cross_split_record_leak(prepared, tmp_path):
     master_path = dst / "manifest.json"
     with master_path.open("r", encoding="utf-8") as f:
         master = json.load(f)
-    master["split_file_hashes"]["training"] = sha256_file(train_path)
+    master["split_file_hashes"]["training"] = sha256_text_file(train_path)
     # Keep stale master split_ids (attacker only edits the split file).
     with master_path.open("w", encoding="utf-8") as f:
         json.dump(master, f, indent=2)

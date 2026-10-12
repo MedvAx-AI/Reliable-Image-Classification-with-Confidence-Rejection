@@ -1,0 +1,14 @@
+# Keep hashed text and scripts on LF so a Windows checkout does not change bytes.
+*.py text eol=lf
+*.md text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.txt text eol=lf
+*.csv text eol=lf
+*.json text eol=lf
+*.npz binary
+*.png binary
+*.pdf binary
+*.pt binary
+*.pth binary
+*.ckpt binary

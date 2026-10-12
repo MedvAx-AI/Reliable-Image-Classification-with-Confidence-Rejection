@@ -208,15 +208,19 @@ def write_json(path: str | Path, payload: dict[str, Any]) -> None:
         f.write("\n")
 
 
+def iter_index_batches(n_rows: int, batch_size: int):
+    if batch_size < 1:
+        raise ValueError("batch_size must be positive")
+    start = 0
+    while start < n_rows:
+        stop = min(start + batch_size, n_rows)
+        yield range(start, stop)
+        start = stop
+
+
 def iter_image_batches(dataset: Any, batch_size: int):
-    batch = []
-    for index in range(len(dataset)):
-        batch.append(dataset[index])
-        if len(batch) == batch_size:
-            yield batch
-            batch = []
-    if batch:
-        yield batch
+    for indexes in iter_index_batches(len(dataset), batch_size):
+        yield [dataset[index] for index in indexes]
 
 
 def infer_split_logits(
@@ -231,8 +235,10 @@ def infer_split_logits(
 ) -> dict[str, Any]:
     """Full image path: fetch, ImageNet transform, backbone, and linear head.
 
-    When ``time_it`` is set, the first ``warmup_batches`` are excluded from the clock.
-    Decoding here is an in-memory CIFAR lookup plus RGB conversion, not a JPEG file read.
+    When ``time_it`` is set, warmup batches are left out of the clock entirely,
+    including their image fetch. Every timed batch fetches its images after the
+    clock starts. Decoding here is an in-memory CIFAR lookup plus RGB conversion,
+    not a JPEG file read.
     """
     model.eval()
     model.assert_frozen_batchnorm()
@@ -245,13 +251,13 @@ def infer_split_logits(
     logit_rows: list[np.ndarray] = []
     timed_images = 0
     elapsed = 0.0
-    seen_batches = 0
 
-    for batch in iter_image_batches(dataset, batch_size):
+    for seen_batches, indexes in enumerate(iter_index_batches(len(dataset), batch_size)):
         warmup = time_it and seen_batches < warmup_batches
         if time_it and not warmup:
             synchronize(device)
             start = time.perf_counter()
+        batch = [dataset[index] for index in indexes]
         tensors = torch.stack([transform(pil_from_uint8(sample.image)) for sample in batch])
         tensors = tensors.to(device)
         with torch.no_grad():
@@ -263,7 +269,6 @@ def infer_split_logits(
         logit_rows.append(logits.detach().cpu().numpy().astype(np.float32))
         source_ids.extend(sample.source_id for sample in batch)
         labels.extend(int(sample.label) for sample in batch)
-        seen_batches += 1
 
     if not logit_rows:
         raise RuntimeError("inference received an empty dataset")
