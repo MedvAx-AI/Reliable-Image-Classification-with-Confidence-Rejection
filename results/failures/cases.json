@@ -1,0 +1,160 @@
+{
+  "cases": [
+    {
+      "category": "confident_wrong_accepted",
+      "row": {
+        "run_id": "a9d534f5ff01664d",
+        "corruption": "clean",
+        "severity": "none",
+        "source_id": "test:5806",
+        "true_class": 0,
+        "predicted_class": 8,
+        "condition": "D",
+        "raw_confidence": 0.9981935237719252,
+        "calibrated_confidence": 0.9986731230858874,
+        "active_threshold": 0.57,
+        "accepted": true,
+        "correct": false,
+        "output": "8"
+      },
+      "clean": {
+        "run_id": "a9d534f5ff01664d",
+        "corruption": "clean",
+        "severity": "none",
+        "source_id": "test:5806",
+        "true_class": 0,
+        "predicted_class": 8,
+        "condition": "D",
+        "raw_confidence": 0.9981935237719252,
+        "calibrated_confidence": 0.9986731230858874,
+        "active_threshold": 0.57,
+        "accepted": true,
+        "correct": false,
+        "output": "8"
+      },
+      "title": "Confidently wrong and accepted",
+      "hypothesis": "The airplane has a small horizontal silhouette against a watery-looking background. Ambiguous shape and background cues at 32x32 may favor ship in the frozen features. This is a visual hypothesis, not proof of internal model reasoning.",
+      "limitation_and_next_test": "Compare foreground/background masking and nearest development features with the checkpoint fixed; a selected image alone cannot reveal internal model reasoning.",
+      "corruption_parameters": {
+        "corruption": "clean",
+        "severity": "none",
+        "severity_index": 0,
+        "param_name": null,
+        "param_value": null
+      },
+      "clean_image_sha256": "02717bcf4a31348090c91cebb8cfc2631ce385d2abb0233de8afcba95f2cfe90",
+      "observed_image_sha256": "02717bcf4a31348090c91cebb8cfc2631ce385d2abb0233de8afcba95f2cfe90"
+    },
+    {
+      "category": "correct_but_rejected",
+      "row": {
+        "run_id": "a9d534f5ff01664d",
+        "corruption": "clean",
+        "severity": "none",
+        "source_id": "test:2998",
+        "true_class": 5,
+        "predicted_class": 5,
+        "condition": "D",
+        "raw_confidence": 0.5495344274132318,
+        "calibrated_confidence": 0.5683582113544442,
+        "active_threshold": 0.57,
+        "accepted": false,
+        "correct": true,
+        "output": "REJECT"
+      },
+      "clean": {
+        "run_id": "a9d534f5ff01664d",
+        "corruption": "clean",
+        "severity": "none",
+        "source_id": "test:2998",
+        "true_class": 5,
+        "predicted_class": 5,
+        "condition": "D",
+        "raw_confidence": 0.5495344274132318,
+        "calibrated_confidence": 0.5683582113544442,
+        "active_threshold": 0.57,
+        "accepted": false,
+        "correct": true,
+        "output": "REJECT"
+      },
+      "title": "Correct latent class, unnecessarily rejected",
+      "hypothesis": "The tightly cropped frontal dog face lacks body context. The predicted dog remains correct, but calibrated confidence 0.568 is just below the frozen 0.57 threshold. This demonstrates the cost of rejection; the threshold was not changed after seeing the image.",
+      "limitation_and_next_test": "Inspect the top class margins and a larger set of correct rejections; lowering the threshold would change coverage and must not be tuned on this test example.",
+      "corruption_parameters": {
+        "corruption": "clean",
+        "severity": "none",
+        "severity_index": 0,
+        "param_name": null,
+        "param_value": null
+      },
+      "clean_image_sha256": "756b1d3e7fa9f17cb5deda3fd22edb508537a36b7e6af7dbd654c23fec16f12c",
+      "observed_image_sha256": "756b1d3e7fa9f17cb5deda3fd22edb508537a36b7e6af7dbd654c23fec16f12c"
+    },
+    {
+      "category": "corruption_damage",
+      "row": {
+        "run_id": "a9d534f5ff01664d",
+        "corruption": "jpeg",
+        "severity": "severe",
+        "source_id": "test:4720",
+        "true_class": 8,
+        "predicted_class": 0,
+        "condition": "D",
+        "raw_confidence": 0.987882790442918,
+        "calibrated_confidence": 0.9902171628406778,
+        "active_threshold": 0.57,
+        "accepted": true,
+        "correct": false,
+        "output": "0"
+      },
+      "clean": {
+        "run_id": "a9d534f5ff01664d",
+        "corruption": "clean",
+        "severity": "none",
+        "source_id": "test:4720",
+        "true_class": 8,
+        "predicted_class": 8,
+        "condition": "D",
+        "raw_confidence": 0.8464720610592873,
+        "calibrated_confidence": 0.8565113304698146,
+        "active_threshold": 0.57,
+        "accepted": true,
+        "correct": true,
+        "output": "8"
+      },
+      "title": "Correct clean decision becomes a wrong accepted decision",
+      "hypothesis": "The small diagonal ship and its wake on blue water lose outline detail and gain visible block/band artifacts under JPEG quality 15. The same source changes from a correct accepted ship to a confidently wrong accepted airplane. Altered shape/wake cues are a plausible cause, not a demonstrated internal mechanism.",
+      "limitation_and_next_test": "Repeat the paired analysis on development images across severities; isolate foreground detail and record confidence transitions without changing the locked policy.",
+      "corruption_parameters": {
+        "corruption": "jpeg",
+        "severity": "severe",
+        "severity_index": 3,
+        "param_name": "quality",
+        "param_value": 15,
+        "jpeg_subsampling": 0,
+        "jpeg_optimize": false,
+        "jpeg_progressive": false
+      },
+      "clean_image_sha256": "8061654940e93c2d35cc4ade786d310adc940c3631367644f7b1aa8c64f62a32",
+      "observed_image_sha256": "c6e02e10d70ed291bf02c997b9aa4203e8b93afd973c84145fa5b28fc6cde883"
+    }
+  ],
+  "category_counts": {
+    "confident_wrong_accepted": {
+      "candidate_rows": 160,
+      "unique_source_images": 160
+    },
+    "correct_but_rejected": {
+      "candidate_rows": 103,
+      "unique_source_images": 103
+    },
+    "corruption_damage": {
+      "candidate_rows": 1305,
+      "unique_source_images": 986
+    }
+  },
+  "missing_categories": [],
+  "selection": "D only; highest calibrated confidence, then source ID and corruption lexicographically",
+  "interpretation": "Representative selected cases, not random samples or prevalence estimates.",
+  "policy_sha256": "2f32e14855ee505da8b27ef46f38e2addc32b25f3f2709a7bb89232e95e5b7f6"
+}
