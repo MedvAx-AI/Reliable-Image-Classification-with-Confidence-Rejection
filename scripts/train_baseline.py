@@ -38,7 +38,8 @@ from src.model import (
     build_frozen_resnet18,
     choose_device,
     config_sha256,
-    load_feature_cache,
+    feature_provenance,
+    load_checked_feature_cache,
     load_head_npz,
     load_logit_cache,
     load_model_config,
@@ -152,14 +153,17 @@ def extract_or_load(
     features_dir: Path,
     batch_size: int,
     reextract: bool,
+    provenance: dict[str, Any],
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     path = feature_path(features_dir, split)
     expected_ids, expected_labels = _expected_rows(manifest, split)
     if path.exists() and not reextract:
-        cache = load_feature_cache(path)
-        if cache["source_ids"] != expected_ids or cache["labels"].tolist() != expected_labels:
-            raise RuntimeError(f"{split}: cached features do not match the manifest")
-        sidecar = json.loads(path.with_suffix(".json").read_text(encoding="utf-8"))
+        cache, sidecar = load_checked_feature_cache(
+            path,
+            expected_ids=expected_ids,
+            expected_labels=expected_labels,
+            provenance=provenance,
+        )
         print(f"Loaded cached features for {split} ({len(cache['source_ids'])} rows)")
         return cache, {
             "split": split,
@@ -167,6 +171,7 @@ def extract_or_load(
             "cached": True,
             "n": len(cache["source_ids"]),
             "npz_sha256": sidecar.get("npz_sha256"),
+            "provenance_checked": True,
         }
 
     print(f"Extracting clean features for {split} ...")
@@ -196,16 +201,15 @@ def extract_or_load(
     label_array = np.asarray(labels, dtype=np.int64)
     if source_ids != expected_ids or label_array.tolist() != expected_labels:
         raise RuntimeError(f"{split}: extracted rows do not match the manifest")
+    expected_shape = (len(expected_ids), int(provenance["feature_dim"]))
+    if tuple(features.shape) != expected_shape:
+        raise RuntimeError(f"{split}: feature shape {tuple(features.shape)} != {expected_shape}")
     meta = {
-        "split": split,
-        "corruption": "clean",
-        "severity": "none",
+        **provenance,
         "n": len(source_ids),
-        "feature_dim": int(features.shape[1]),
         "extraction_seconds": seconds,
-        "batch_size": batch_size,
-        "device": str(device),
         "includes_backbone": True,
+        "includes_image_fetch": True,
     }
     saved = save_array_artifact(
         path,
@@ -218,7 +222,14 @@ def extract_or_load(
     )
     print(f"  {split}: {len(source_ids)} images in {seconds:.1f}s ({saved['npz_sha256'][:12]})")
     cache = {"features": features, "labels": label_array, "source_ids": source_ids}
-    return cache, {"split": split, "seconds": seconds, "cached": False, "n": len(source_ids), "npz_sha256": saved["npz_sha256"]}
+    return cache, {
+        "split": split,
+        "seconds": seconds,
+        "cached": False,
+        "n": len(source_ids),
+        "npz_sha256": saved["npz_sha256"],
+        "provenance_checked": False,
+    }
 
 
 def cpu_feature_gap(model, transform, dataset, device: torch.device, n: int = 32) -> dict[str, Any] | None:
@@ -266,14 +277,28 @@ def run_training(args: argparse.Namespace) -> dict[str, Any]:
     assert_split_integrity(manifest)
 
     print(f"Loading ResNet18_Weights.{model_cfg['model']['weights']} on {device} ...")
-    model, transform, provenance = build_frozen_resnet18(model_cfg, pretrained=True)
+    model, transform, model_provenance = build_frozen_resnet18(model_cfg, pretrained=True)
     model.to(device)
     model.assert_frozen_batchnorm()
     bn_before = model.batchnorm_buffer_sha256()
 
     extraction_log = []
     caches = {}
+    batch_size = int(model_cfg["extraction"]["batch_size"])
     for split in model_cfg["extraction"]["splits"]:
+        provenance = feature_provenance(
+            split=split,
+            corruption=str(model_cfg["extraction"]["corruption"]),
+            severity=str(model_cfg["extraction"]["severity"]),
+            feature_dim=int(model_provenance["feature_dim"]),
+            batch_size=batch_size,
+            device=str(device),
+            weights_enum=str(model_provenance["weights_enum"]),
+            weights_url=model_provenance["weights_url"],
+            transform=model_provenance["transform"],
+            model_config_sha256=config_sha256(model_cfg),
+            split_manifest_sha256=str(manifest["manifest_sha256"]),
+        )
         cache, info = extract_or_load(
             model,
             transform,
@@ -282,8 +307,9 @@ def run_training(args: argparse.Namespace) -> dict[str, Any]:
             data_config=data_cfg,
             manifest=manifest,
             features_dir=features_dir,
-            batch_size=int(model_cfg["extraction"]["batch_size"]),
+            batch_size=batch_size,
             reextract=args.reextract,
+            provenance=provenance,
         )
         caches[split] = cache
         extraction_log.append(info)
@@ -437,7 +463,7 @@ def run_training(args: argparse.Namespace) -> dict[str, Any]:
 
     checkpoint_manifest = {
         "saved_utc": saved_utc,
-        "provenance": provenance,
+        "provenance": model_provenance,
         "head_sha256": head_sha,
         "head_path": str(checkpoint_path.relative_to(REPO_ROOT)),
         "model_config_sha256": model_hash,

@@ -2,19 +2,25 @@
 
 from __future__ import annotations
 
+import json
 import sys
+import time
 from pathlib import Path
 
 import numpy as np
 import pytest
 import torch
+import torch.nn as nn
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT))
 
+from src.data import Sample
 from src.model import (
     assert_split_unlocked,
     build_frozen_resnet18,
+    feature_provenance,
+    load_checked_feature_cache,
     load_logit_cache,
     load_model_config,
     save_array_artifact,
@@ -22,6 +28,7 @@ from src.model import (
 from src.predict import (
     condition_a_report,
     expected_calibration_error,
+    infer_split_logits,
     negative_log_likelihood,
     temperature_preserves_argmax,
 )
@@ -180,6 +187,120 @@ def test_logit_artifact_roundtrip(tmp_path):
     assert loaded["source_ids"] == ["train:1", "train:2"]
     assert np.array_equal(loaded["labels"], labels)
     assert np.allclose(loaded["logits"], logits)
+
+
+def _provenance(**overrides):
+    base = feature_provenance(
+        split="training",
+        corruption="clean",
+        severity="none",
+        feature_dim=4,
+        batch_size=8,
+        device="cpu",
+        weights_enum="ResNet18_Weights.IMAGENET1K_V1",
+        weights_url="https://example.invalid/resnet18.pth",
+        transform={"resize_size": 256, "crop_size": 224},
+        model_config_sha256="a" * 64,
+        split_manifest_sha256="b" * 64,
+    )
+    base.update(overrides)
+    return base
+
+
+def test_feature_cache_requires_hash_and_provenance(tmp_path):
+    path = tmp_path / "training_clean.npz"
+    provenance = _provenance()
+    features = np.arange(8, dtype=np.float32).reshape(2, 4)
+    labels = np.array([1, 3], dtype=np.int64)
+    ids = ["train:1", "train:2"]
+    save_array_artifact(
+        path,
+        arrays={"features": features, "labels": labels, "source_ids": np.asarray(ids)},
+        metadata=dict(provenance),
+    )
+    cache, sidecar = load_checked_feature_cache(
+        path,
+        expected_ids=ids,
+        expected_labels=[1, 3],
+        provenance=provenance,
+    )
+    assert sidecar["npz_sha256"]
+    assert np.array_equal(cache["features"], features)
+
+    sidecar_path = path.with_suffix(".json")
+    sidecar = json.loads(sidecar_path.read_text(encoding="utf-8"))
+    sidecar["device"] = "mps"
+    sidecar_path.write_text(json.dumps(sidecar), encoding="utf-8")
+    with pytest.raises(RuntimeError, match="provenance"):
+        load_checked_feature_cache(
+            path,
+            expected_ids=ids,
+            expected_labels=[1, 3],
+            provenance=provenance,
+        )
+
+    sidecar["device"] = "cpu"
+    sidecar["npz_sha256"] = "0" * 64
+    sidecar_path.write_text(json.dumps(sidecar), encoding="utf-8")
+    with pytest.raises(RuntimeError, match="sha256"):
+        load_checked_feature_cache(
+            path,
+            expected_ids=ids,
+            expected_labels=[1, 3],
+            provenance=provenance,
+        )
+
+
+class _TimerStub(nn.Module):
+    def __init__(self) -> None:
+        super().__init__()
+        self.head = nn.Linear(1, 10)
+
+    def assert_frozen_batchnorm(self) -> None:
+        return None
+
+    def forward(self, images: torch.Tensor) -> torch.Tensor:
+        return self.head(images.new_zeros(images.shape[0], 1))
+
+
+def test_inference_timer_includes_image_fetch(monkeypatch):
+    events: list[str] = []
+    real_clock = time.perf_counter
+
+    def clock() -> float:
+        events.append("clock")
+        return real_clock()
+
+    monkeypatch.setattr("src.predict.time.perf_counter", clock)
+    image = np.zeros((2, 2, 3), dtype=np.uint8)
+
+    class Dataset:
+        def __len__(self) -> int:
+            return 2
+
+        def __getitem__(self, index: int) -> Sample:
+            events.append("fetch")
+            return Sample(
+                source_id=f"train:{index}",
+                split="model_validation",
+                label=index,
+                corruption="clean",
+                severity="none",
+                image=image,
+            )
+
+    result = infer_split_logits(
+        _TimerStub(),
+        Dataset(),
+        lambda _image: torch.zeros(3, 4, 4),
+        torch.device("cpu"),
+        batch_size=2,
+        time_it=True,
+        warmup_batches=0,
+    )
+    assert result["timed_images"] == 2
+    assert events[:3] == ["clock", "fetch", "fetch"]
+    assert "in_memory_image_fetch" in result["includes"]
 
 
 def test_backbone_batchnorm_does_not_drift_and_head_is_ten_way():

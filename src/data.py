@@ -86,6 +86,23 @@ def sha256_file(path: Path) -> str:
     return h.hexdigest()
 
 
+def sha256_text_file(path: Path) -> str:
+    """SHA-256 of text bytes with CR LF and lone CR folded to LF.
+
+    Git's Windows checkout can rewrite LF manifests as CR LF. The stored
+    split hashes stay the LF hashes; verification folds line endings first.
+    """
+    data = path.read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    return hashlib.sha256(data).hexdigest()
+
+
+def write_json_lf(path: Path, payload: Any) -> None:
+    """Write JSON with LF newlines even when the OS default is CR LF."""
+    with path.open("w", encoding="utf-8", newline="\n") as f:
+        json.dump(payload, f, indent=2)
+        f.write("\n")
+
+
 def sha256_json(obj: Any) -> str:
     payload = json.dumps(obj, sort_keys=True, separators=(",", ":")).encode("utf-8")
     return hashlib.sha256(payload).hexdigest()
@@ -452,7 +469,7 @@ def verify_manifest_directory(manifests_dir: str | Path) -> dict[str, Any]:
         if not split_path.exists():
             raise FileNotFoundError(f"missing split file: {split_path}")
 
-        actual_hash = sha256_file(split_path)
+        actual_hash = sha256_text_file(split_path)
         if actual_hash != expected_hashes.get(name):
             raise AssertionError(
                 f"{name}.json hash mismatch: expected {expected_hashes.get(name)}, "
@@ -533,9 +550,7 @@ def save_manifests(
             "ids": [r["source_id"] for r in manifest["splits"][name]],
         }
         payload["sha256"] = sha256_json(payload["ids"])
-        with p.open("w", encoding="utf-8") as f:
-            json.dump(payload, f, indent=2)
-            f.write("\n")
+        write_json_lf(p, payload)
         paths[name] = p
 
     # Compact master: IDs + metadata only (no duplicated record bodies).
@@ -556,12 +571,10 @@ def save_manifests(
             for name in SPLIT_NAMES
         },
         "manifest_sha256": manifest["manifest_sha256"],
-        "split_file_hashes": {name: sha256_file(paths[name]) for name in SPLIT_NAMES},
+        "split_file_hashes": {name: sha256_text_file(paths[name]) for name in SPLIT_NAMES},
     }
     master_path = out / "manifest.json"
-    with master_path.open("w", encoding="utf-8") as f:
-        json.dump(master, f, indent=2)
-        f.write("\n")
+    write_json_lf(master_path, master)
     paths["manifest"] = master_path
 
     summary = {
@@ -574,9 +587,7 @@ def save_manifests(
         "created_utc": manifest["created_utc"],
     }
     summary_path = out / "summary.json"
-    with summary_path.open("w", encoding="utf-8") as f:
-        json.dump(summary, f, indent=2)
-        f.write("\n")
+    write_json_lf(summary_path, summary)
     paths["summary"] = summary_path
 
     # Final gate: re-read from disk so save cannot skip on-disk checks.
