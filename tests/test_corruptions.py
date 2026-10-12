@@ -29,9 +29,9 @@ from src.data import Cifar10SplitDataset, load_config, load_manifest, prepare_al
 
 
 @pytest.fixture(scope="module")
-def ensure_manifest():
-    prepare_all(write_panel=False)
-    return load_manifest(verify=True)
+def ensure_manifest(tmp_path_factory):
+    result = prepare_all(out_dir=tmp_path_factory.mktemp('corruption-manifests'), write_panel=False)
+    return load_manifest(manifests_dir=result['manifests_dir'], verify=True)
 
 
 def _clean_sample(ensure_manifest):

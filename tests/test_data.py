@@ -28,10 +28,19 @@ from src.data import (
 
 
 @pytest.fixture(scope="module")
-def prepared():
-    result = prepare_all(write_panel=False)
-    manifest = load_manifest(verify=True)
+def original_manifest_bytes():
+    return {p.name: p.read_bytes() for p in (REPO_ROOT / 'artifacts/splits').glob('*.json')}
+
+
+@pytest.fixture(scope="module")
+def prepared(original_manifest_bytes, tmp_path_factory):
+    result = prepare_all(out_dir=tmp_path_factory.mktemp('data-manifests'), write_panel=False)
+    manifest = load_manifest(manifests_dir=result['manifests_dir'], verify=True)
     return result, manifest
+
+
+def test_preparation_preserves_frozen_repository_manifests(prepared, original_manifest_bytes):
+    assert {p.name: p.read_bytes() for p in (REPO_ROOT / 'artifacts/splits').glob('*.json')} == original_manifest_bytes
 
 
 def test_counts_and_disjointness(prepared):

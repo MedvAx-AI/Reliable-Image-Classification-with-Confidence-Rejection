@@ -1,0 +1,10 @@
+# Independently tested Windows CPU evaluation environment, Python 3.13.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.14.0+cpu
+torchvision==0.29.0+cpu
+numpy==2.4.6
+pillow==12.2.0
+PyYAML==6.0.3
+pytest==8.4.2
+pandas==3.0.5
+matplotlib==3.11.0
